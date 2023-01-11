@@ -1,14 +1,14 @@
-import { iImagesRecipes } from "../imagesRecipes/imagesRecipes";
-import { iIngredientsRecipes } from "../ingredientsRecipes/ingredientsRecipesInterface";
-import { iPreparations } from "../preparations/preparationsInterface";
+import { iImagesRecipesRequest } from "../imagesRecipes/imagesRecipes";
+import { iIngredientsRecipesRequest } from "../ingredientsRecipes/ingredientsRecipesInterface";
+import { iPreparationsRequest } from "../preparations/preparationsInterface";
 
 export interface iRecipeRequest {
     name: string;
     description: string;
+    category: string;
     time: string;
     portions: number;
-    categoryId: string;
-    imagesRecipes: iImagesRecipes[];
-    ingredientsRecipes: iIngredientsRecipes[];
-    preparations: iPreparations[];
+    imagesRecipes: iImagesRecipesRequest[];
+    ingredientsRecipes: iIngredientsRecipesRequest[];
+    preparations: iPreparationsRequest[];
 }

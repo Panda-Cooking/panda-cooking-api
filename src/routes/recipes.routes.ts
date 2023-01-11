@@ -1,10 +1,15 @@
 import { Router } from "express";
 import { createRecipeController } from "../controllers/recipes/createRecipe.controller";
-import { updatedCommentController } from "../controllers/comments.controller";
+import { verifySchemaMiddleware } from "../middlewares/verifySchema.middleware";
+import { recipesSchema } from "../schemas/recipes/recipesSchema";
 
 const recipesRouter = Router();
 
-recipesRouter.post("", createRecipeController);
-recipesRouter.patch("/:recipe_id/comments/:comment_id", updatedCommentController);
+recipesRouter.post(
+    "",
+    verifySchemaMiddleware(recipesSchema),
+    createRecipeController
+);
+
 
 export default recipesRouter;
