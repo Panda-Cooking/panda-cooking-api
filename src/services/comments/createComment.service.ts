@@ -21,7 +21,6 @@ const createCommentService = async (commentData: iCommentRequest) => {
         throw new AppError("Recipe does not exists", 404)
     }
 
-    console.log(comment)
     await commentaryRepo.save(comment)
 
     await commentaryRepo.update({id: comment.id}, {user: user, recipe: recipe})
