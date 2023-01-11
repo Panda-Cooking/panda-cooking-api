@@ -3,6 +3,7 @@ export interface iUser {
     name: string;
     email: string;
     isAdm: boolean;
+    imageProfile: string;
 }
 
 export interface iUserRequest {
@@ -14,9 +15,9 @@ export interface iUserRequest {
 
 export interface iUserResponse {
     id: string;
-    name: string;
-    email: string;
-    imageProfile: string;
+    name?: string;
+    email?: string;
+    imageProfile?: string;
     isAdm: boolean;
 }
 
