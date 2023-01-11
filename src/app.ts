@@ -13,6 +13,7 @@ app.use(express.json())
 /** routes here */
 
 app.use("/recipes", recipesRouter);
+app.use("/comments", commentsRoutes);
 
 app.use("/users", usersRouter);
 
