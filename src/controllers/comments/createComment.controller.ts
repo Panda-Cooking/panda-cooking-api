@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { iCommentRequest } from "../../interfaces/comments/commentsInterface";
 import createCommentService from "../../services/comments/createComment.service";
+import listCommentsService from "../../services/comments/listComments.service";
 import updatedCommentService from "../../services/comments/updatedComment.service";
 
 const createCommentController = async (req: Request, res: Response) => {
@@ -20,6 +21,11 @@ export const updatedCommentController = async (req: Request, res: Response) => {
         commentId
     );
     return res.json(updatedComment);
+};
+
+export const listCommentsController = async (req: Request, resp: Response) => {
+    const users = await listCommentsService();
+    return resp.json(users);
 };
 
 export default createCommentController;
