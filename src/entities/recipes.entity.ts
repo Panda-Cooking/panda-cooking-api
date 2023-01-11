@@ -36,7 +36,7 @@ export class Recipe {
     @Column({
         type: "integer",
     })
-    portions: string;
+    portions: number;
 
     @ManyToOne(() => User, (user) => user.recipes)
     user: User;
