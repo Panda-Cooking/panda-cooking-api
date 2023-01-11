@@ -13,8 +13,8 @@ const setDataSourceConfig = (): DataSourceOptions => {
         host: process.env.DB_HOST,
         logging: true,
         synchronize: false,
-        entities: [path.join(__dirname, "./migrations/**.{js,ts}")],
-        migrations: [path.join(__dirname, "./entities/**.{js,ts}")],
+        entities: [path.join(__dirname, "./entities/**.{js,ts}")],
+        migrations: [path.join(__dirname, "./migrations/**.{js,ts}")],
     };
 };
 
