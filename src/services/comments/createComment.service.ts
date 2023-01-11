@@ -12,7 +12,7 @@ const createCommentService = async (
 
     const user = await userRepo.findOneBy({ id: commentData.userId });
     const recipe = await recipeRepo.findOneBy({ id: commentData.recipeId });
-    const comment = await commentaryRepo.create(commentData);
+    const comment = await commentaryRepo.create(commentData.description);
 
     return { description: "1", userId: "a", recipeId: "1" };
 };
