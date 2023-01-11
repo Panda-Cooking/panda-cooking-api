@@ -1,8 +1,12 @@
 import express from "express";
-import "express-async-errors";
 import handlerError from "./errors/handlerError";
+import userRoutes from "./routes/user.routes";
+import "express-async-errors";
 
 const app = express();
+app.use(express.json());
+
+app.use("/users", userRoutes);
 
 /** routes here */
 
