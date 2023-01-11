@@ -1,14 +1,15 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { IUser, IUserRequest } from "./../interfaces/users/index";
+import { iUser, iUserRequest } from "./../interfaces/users/index";
 
-const userSchema: SchemaOf<IUserRequest> = yup.object().shape({
+const userSchema: SchemaOf<iUserRequest> = yup.object().shape({
     email: yup.string().email().required(),
     name: yup.string().required(),
     password: yup.string().required(),
+    imageProfile: yup.string().required(),
 });
 
-const userWithoutPasswordSchema: SchemaOf<IUser> = yup.object().shape({
+const userWithoutPasswordSchema: SchemaOf<iUser> = yup.object().shape({
     id: yup.string().required(),
     name: yup.string().required(),
     email: yup.string().email().required(),
