@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { listUserFavoriteRecipesController } from "../controllers/users/listUserFavoriteRecipes.controller";
 import { listUserProfileController } from "../controllers/users/listUserProfileController.controller";
 import { patchUserController } from "../controllers/users/patchUserController.controller";
 import { createUserController } from "../controllers/users/users.controllers";
@@ -12,5 +13,6 @@ const usersRouter = Router();
 usersRouter.get("/profile", ensureAuthMiddleware, listUserProfileController);
 usersRouter.post("", verifySchemaMiddleware(userSchema), createUserController);
 usersRouter.patch("/profile", ensureAuthMiddleware, ensurePatchDataStructure, verifySchemaMiddleware(patchDataSchema), patchUserController)
+usersRouter.get("/profile/favoriteRecipes", ensureAuthMiddleware, listUserFavoriteRecipesController)
 
 export default usersRouter;
