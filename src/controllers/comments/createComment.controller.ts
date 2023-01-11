@@ -1,14 +1,25 @@
-import { Request, Response} from 'express'
-import { iCommentRequest } from '../../interfaces/comments/commentsInterface'
-import createCommentService from '../../services/comments/createComment.service'
+import { Request, Response } from "express";
+import { iCommentRequest } from "../../interfaces/comments/commentsInterface";
+import createCommentService from "../../services/comments/createComment.service";
+import updatedCommentService from "../../services/comments/updatedComment.service";
 
+const createCommentController = async (req: Request, res: Response) => {
+    const commentData: iCommentRequest = req.body;
+    const newComment = await createCommentService(commentData);
 
-const createCommentController = async (req: Request, res: Response) =>{
+    return res.status(201).json(newComment);
+};
 
-    const commentData: iCommentRequest = req.body
-    const newComment = await createCommentService(commentData)
+export const updatedCommentController = async (req: Request, res: Response) => {
+    const data = req.body;
+    const recipeId = req.params.recipe_id;
+    const commentId = req.params.comment_id;
+    const updatedComment = await updatedCommentService(
+        data,
+        recipeId,
+        commentId
+    );
+    return res.json(updatedComment);
+};
 
-    return res.status(201).json(newComment)
-}
-
-export default createCommentController
+export default createCommentController;
