@@ -3,9 +3,6 @@ export interface iUser {
     name: string;
     email: string;
     isAdm: boolean;
-    isActive: boolean;
-    createdAt: Date;
-    updatedAt: Date;
 }
 
 export interface iUserRequest {

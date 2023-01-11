@@ -2,9 +2,9 @@ import AppDataSource from "../../data-source";
 import AppError from "../../errors/appError";
 import { User } from "../../entities/users.entity";
 import { iUser, iUserRequest } from "./../../interfaces/users/index";
-import { userWithoutPasswordSchema } from "../../schemas/user.schema";
+import { userWithoutPasswordSchema } from "../../schemas/users/user.schema";
 
-const createUserService = async (userData: iUserRequest): Promise<iUser> => {
+const createUserService = async (userData: iUserRequest): Promise<any> => {
     const userRepository = AppDataSource.getRepository(User);
 
     const findUser = await userRepository.findOneBy({
@@ -16,7 +16,7 @@ const createUserService = async (userData: iUserRequest): Promise<iUser> => {
     }
 
     const createdUser = userRepository.create(userData);
-    userRepository.save(createdUser);
+    await userRepository.save(createdUser);
 
     const userWithoutPassword = await userWithoutPasswordSchema.validate(
         createdUser,
@@ -25,7 +25,7 @@ const createUserService = async (userData: iUserRequest): Promise<iUser> => {
         }
     );
 
-    return userWithoutPassword;
+    return userWithoutPassword
 };
 
 export default createUserService;
