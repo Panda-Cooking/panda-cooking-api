@@ -1,8 +1,5 @@
-export interface iPreparations {
-    description: string;
-    recipeId: string;
-}
-
 export interface iPreparationsRequest {
     description: string;
 }
+
+export interface iPreparationsResponse extends iPreparationsRequest {}
