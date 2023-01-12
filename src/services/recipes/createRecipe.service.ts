@@ -8,6 +8,7 @@ import { Recipe } from "../../entities/recipes.entity";
 import { User } from "../../entities/users.entity";
 import AppError from "../../errors/appError";
 import { iRecipeRequest } from "../../interfaces/recipes/recipesInterface";
+import { recipesSchemaResponse } from "../../schemas/recipes/recipesSchema";
 
 const createRecipeService = async (
     userAuthId: string,
@@ -85,7 +86,16 @@ const createRecipeService = async (
         await preparationsRepo.save(newPreparation);
     });
 
-    return newRecipeSaved;
+    newRecipeSaved["ingredients"] = recipeData.ingredients;
+
+    const returnDataRecipe = await recipesSchemaResponse.validate(
+        newRecipeSaved,
+        {
+            stripUnknown: true,
+        }
+    );
+
+    return returnDataRecipe;
 };
 
 export default createRecipeService;

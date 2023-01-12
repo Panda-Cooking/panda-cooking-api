@@ -11,6 +11,8 @@ export class ImagesRecipes {
     })
     url: string;
 
-    @ManyToOne(() => Recipe, (recipe) => recipe.imagesRecipes)
+    @ManyToOne(() => Recipe, (recipe) => recipe.imagesRecipes, {
+        onDelete: "CASCADE",
+    })
     recipe: Recipe;
 }
