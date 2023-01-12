@@ -6,6 +6,7 @@ import { listAllRecipesController } from "../controllers/recipes/listAllRecipes.
 import { listRecipeController } from "../controllers/recipes/listRecipe.controller";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuthMiddleware.middleware";
 import { verifySchemaMiddleware } from "../middlewares/verifySchema.middleware";
+import { commentsUpdated } from "../schemas/comments/comments.schema";
 import { recipesSchema } from "../schemas/recipes/recipesSchema";
 
 const recipesRouter = Router();
@@ -22,6 +23,7 @@ recipesRouter.post(
 recipesRouter.patch(
     "/:recipe_id/comments/:comment_id",
     ensureAuthMiddleware,
+    verifySchemaMiddleware(commentsUpdated),
     updatedCommentController
 );
 
