@@ -7,7 +7,7 @@ import { ensureAuthMiddleware } from "../middlewares/ensureAuthMiddleware.middle
 const commentsRoutes = Router();
 
 commentsRoutes.post("", ensureAuthMiddleware, createCommentController);
-commentsRoutes.get("", listCommentsController);
+commentsRoutes.get("", ensureAuthMiddleware,listCommentsController);
 commentsRoutes.delete("/:id", deleteCommentController);
 
 export default commentsRoutes;

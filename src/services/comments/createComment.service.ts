@@ -3,9 +3,9 @@ import { Comment } from "../../entities/coments.entity";
 import { Recipe } from "../../entities/recipes.entity";
 import { User } from "../../entities/users.entity";
 import AppError from "../../errors/appError";
-import { iCommentRequest, iCommentReturn } from "../../interfaces/comments/commentsInterface";
+import { iCommentRequest, iCommentResponse } from "../../interfaces/comments/commentsInterface";
 
-const createCommentService = async (commentData: iCommentRequest): Promise<iCommentReturn> => {
+const createCommentService = async (commentData: iCommentRequest): Promise<iCommentResponse> => {
     const commentaryRepo = AppDataSource.getRepository(Comment);
     const userRepo = AppDataSource.getRepository(User);
     const recipeRepo = AppDataSource.getRepository(Recipe);
@@ -24,7 +24,7 @@ const createCommentService = async (commentData: iCommentRequest): Promise<iComm
     await commentaryRepo.save(comment)
 
     await commentaryRepo.update({id: comment.id}, {user: user, recipe: recipe})
-    
+
     return comment
 };
 

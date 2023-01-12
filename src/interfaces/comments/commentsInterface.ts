@@ -7,6 +7,13 @@ export interface iCommentRequest {
     recipeId: string;
 }
 
+export interface iCommentResponse {
+    id: string;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export interface iComment {
     id: string;
     description: string;
