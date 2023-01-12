@@ -12,7 +12,9 @@ export class IngredientsRecipes {
     })
     amount: string;
 
-    @ManyToOne(() => Recipe, (recipe) => recipe.ingredientsRecipes)
+    @ManyToOne(() => Recipe, (recipe) => recipe.ingredientsRecipes, {
+        onDelete: "CASCADE",
+    })
     recipe: Recipe;
 
     @ManyToOne(

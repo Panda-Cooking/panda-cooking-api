@@ -11,6 +11,8 @@ export class Preparations {
     })
     description: string;
 
-    @ManyToOne(() => Recipe, (recipe) => recipe.preparations)
+    @ManyToOne(() => Recipe, (recipe) => recipe.preparations, {
+        onDelete: "CASCADE",
+    })
     recipe: Recipe;
 }
