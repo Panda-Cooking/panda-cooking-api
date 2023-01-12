@@ -21,6 +21,7 @@ recipesRouter.post(
 );
 recipesRouter.patch(
     "/:recipe_id/comments/:comment_id",
+    ensureAuthMiddleware,
     updatedCommentController
 );
 
