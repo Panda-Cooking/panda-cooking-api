@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import {
+    iRecipePatchRequest,
     iRecipeRequest,
     iRecipeResponse,
 } from "../../interfaces/recipes/recipesInterface";
@@ -35,6 +36,30 @@ const recipesSchema: yup.SchemaOf<iRecipeRequest> = yup.object({
             })
         )
         .required(),
+});
+
+const recipesPacthSchema: yup.SchemaOf<iRecipePatchRequest> = yup.object({
+    name: yup.string(),
+    description: yup.string(),
+    category: yup.string(),
+    time: yup.string(),
+    portions: yup.number(),
+    imagesRecipes: yup.array().of(
+        yup.object({
+            url: yup.string().url(),
+        })
+    ),
+    ingredients: yup.array().of(
+        yup.object({
+            amount: yup.string(),
+            name: yup.string(),
+        })
+    ),
+    preparations: yup.array().of(
+        yup.object({
+            description: yup.string(),
+        })
+    ),
 });
 
 const recipesSchemaResponse: yup.SchemaOf<iRecipeResponse> = yup.object({
@@ -81,4 +106,4 @@ const recipesSchemaResponse: yup.SchemaOf<iRecipeResponse> = yup.object({
     id: yup.string().required(),
 });
 
-export { recipesSchema, recipesSchemaResponse };
+export { recipesSchema, recipesSchemaResponse, recipesPacthSchema };
