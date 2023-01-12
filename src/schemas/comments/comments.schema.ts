@@ -3,23 +3,23 @@ import * as yup from "yup";
 import { SchemaOf } from "yup";
 import { iCommentUpdated } from "../../interfaces/comments/commentsInterface";
 
-export const commentsUpdated: SchemaOf<any> = yup.object().shape({
-    id: yup.string().notRequired(),
-    description: yup.string().notRequired(),
-    createdAt: yup.date().notRequired(),
-    updatedAt: yup.date().notRequired(),
+export const commentsUpdated: SchemaOf<iCommentUpdated> = yup.object().shape({
+    id: yup.string(),
+    description: yup.string().required(),
+    createdAt: yup.date(),
+    updatedAt: yup.date(),
     recipe: yup.object({
-        id: yup.string().notRequired(),
-        name: yup.string().notRequired(),
-        description: yup.string().notRequired(),
-        time: yup.string().notRequired(),
-        portions: yup.number().notRequired(),
+        id: yup.string(),
+        name: yup.string(),
+        description: yup.string(),
+        time: yup.string(),
+        portions: yup.number(),
     }),
     user: yup.object({
-        id: yup.string().notRequired(),
-        name: yup.string().notRequired(),
-        email: yup.string().notRequired(),
-        imageProfile: yup.string().notRequired(),
-        isAdm: yup.boolean().notRequired(),
+        id: yup.string(),
+        name: yup.string(),
+        email: yup.string(),
+        imageProfile: yup.string(),
+        isAdm: yup.boolean(),
     }),
 });
