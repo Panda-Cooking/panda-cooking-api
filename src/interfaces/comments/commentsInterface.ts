@@ -20,6 +20,18 @@ export interface iCommentUpdated {
     description: string;
     createdAt: Date;
     updatedAt: Date;
-    userId: iUserResponse;
-    recipeId: iRecipeRequest;
+    user: {
+        id: string;
+        name: string;
+        email: string;
+        imageProfile: string;
+        isAdm: boolean;
+    };
+    recipe: {
+        id: string;
+        name: string;
+        description: string;
+        time: string;
+        portions: number;
+    };
 }
