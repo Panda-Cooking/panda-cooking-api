@@ -1,8 +1,7 @@
 import { Router } from "express";
-import createCommentController, {
-    listCommentsController,
-} from "../controllers/comments/createComment.controller";
+import createCommentController from "../controllers/comments/createComment.controller";
 import deleteCommentController from "../controllers/comments/deleteComment.controller";
+import { listCommentsController } from "../controllers/comments/listComments.controller";
 
 const commentsRoutes = Router();
 
