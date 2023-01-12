@@ -42,5 +42,5 @@ export interface iFavoriteRecipe {
         description: string;
         time: string;
         portions: number;
-    }
+    };
 }
