@@ -14,7 +14,7 @@ const recipesSchema: yup.SchemaOf<iRecipeRequest> = yup.object({
         .array()
         .of(
             yup.object({
-                url: yup.string().required(),
+                url: yup.string().url().required(),
             })
         )
         .required(),
