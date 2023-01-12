@@ -1,10 +1,9 @@
 import AppDataSource from "../../data-source";
-import { iCommentRequest } from "../../interfaces/comments/commentsInterface";
+import { iCommentRequest, iCommentUpdated } from "../../interfaces/comments/commentsInterface";
 import AppError from "../../errors/appError";
 import { Comment } from "../../entities/coments.entity";
 import { Recipe } from "../../entities/recipes.entity";
 import { User } from "../../entities/users.entity";
-import { userWithoutPasswordSchema } from "../../schemas/users/user.schema";
 import { commentsUpdated } from "../../schemas/comments/comments.schema";
 
 const updatedCommentService = async (
@@ -12,7 +11,7 @@ const updatedCommentService = async (
   recipeId: string,
   commentId: string,
   userId: string,
-): Promise<Comment> => {
+): Promise<iCommentUpdated> => {
     try {
         const commentRepository = AppDataSource.getRepository(Comment);
         const recipeRepository = AppDataSource.getRepository(Recipe);
