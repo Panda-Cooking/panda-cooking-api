@@ -5,6 +5,7 @@ import { deleteRecipeController } from "../controllers/recipes/deleteRecipe.cont
 import { listAllRecipesController } from "../controllers/recipes/listAllRecipes.controller";
 import { listRecipeController } from "../controllers/recipes/listRecipe.controller";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuthMiddleware.middleware";
+import validatedIsAdmMiddleware from "../middlewares/validatedIsAdm.middleware";
 import { verifySchemaMiddleware } from "../middlewares/verifySchema.middleware";
 import { commentsUpdated } from "../schemas/comments/comments.schema";
 import { recipesSchema } from "../schemas/recipes/recipesSchema";

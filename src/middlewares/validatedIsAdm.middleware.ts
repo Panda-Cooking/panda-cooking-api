@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import AppDataSource from '../data-source';
+import { Recipe } from '../entities/recipes.entity';
 import { User } from '../entities/users.entity';
 import AppError from '../errors/appError';
 
