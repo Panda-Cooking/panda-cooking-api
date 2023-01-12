@@ -3,7 +3,10 @@ import { iCommentRequest } from "../../interfaces/comments/commentsInterface";
 import createCommentService from "../../services/comments/createComment.service";
 
 const createCommentController = async (req: Request, res: Response) => {
+
     const commentData: iCommentRequest = req.body;
+    commentData.userId = req.userId
+    
     const newComment = await createCommentService(commentData);
 
     return res.status(201).json(newComment);
