@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { updatedCommentController } from "../controllers/comments/createComment.controller";
+import { updatedCommentController } from "../controllers/comments/updatedComment.controller";
 import { createRecipeController } from "../controllers/recipes/createRecipe.controller";
 import { listAllRecipesController } from "../controllers/recipes/listAllRecipes.controller";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuthMiddleware.middleware";
