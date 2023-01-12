@@ -3,7 +3,7 @@ import { Comment } from "../../entities/coments.entity"
 import AppError from "../../errors/appError"
 
 
-const deleteCommentService = async (commentId: string) =>{
+const deleteCommentService = async (commentId: string): Promise<number> =>{
     const comentaryRepo = AppDataSource.getRepository(Comment)
 
     const comment = await comentaryRepo.findOneBy({id: commentId})

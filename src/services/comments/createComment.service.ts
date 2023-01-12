@@ -3,9 +3,9 @@ import { Comment } from "../../entities/coments.entity";
 import { Recipe } from "../../entities/recipes.entity";
 import { User } from "../../entities/users.entity";
 import AppError from "../../errors/appError";
-import { iCommentRequest } from "../../interfaces/comments/commentsInterface";
+import { iCommentRequest, iCommentReturn } from "../../interfaces/comments/commentsInterface";
 
-const createCommentService = async (commentData: iCommentRequest) => {
+const createCommentService = async (commentData: iCommentRequest): Promise<iCommentReturn> => {
     const commentaryRepo = AppDataSource.getRepository(Comment);
     const userRepo = AppDataSource.getRepository(User);
     const recipeRepo = AppDataSource.getRepository(Recipe);
