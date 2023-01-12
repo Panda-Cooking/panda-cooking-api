@@ -13,7 +13,7 @@ const deleteUserService = async (userId: string) => {
         throw new AppError("User not found!", 404);
     }
 
-    await userRepository.remove(findUser);
+    await userRepository.delete({ id: userId });
     return [];
 };
 
