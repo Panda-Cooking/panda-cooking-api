@@ -12,7 +12,7 @@ const recipesRouter = Router();
 
 recipesRouter.get("", listAllRecipesController);
 recipesRouter.get("/:id", listRecipeController);
-recipesRouter.delete("/:id", deleteRecipeController);
+recipesRouter.delete("/:id", ensureAuthMiddleware, deleteRecipeController);
 recipesRouter.post(
     "",
     ensureAuthMiddleware,
