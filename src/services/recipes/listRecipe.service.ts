@@ -1,5 +1,6 @@
 import AppDataSource from "../../data-source";
 import { Recipe } from "../../entities/recipes.entity";
+import AppError from "../../errors/appError";
 
 const listRecipeService = async (recipeId: string): Promise<Recipe> => {
     const recipeRepo = AppDataSource.getRepository(Recipe);
@@ -19,6 +20,10 @@ const listRecipeService = async (recipeId: string): Promise<Recipe> => {
             comments: true,
         },
     });
+
+    if (!recipe) {
+        throw new AppError("Recipe not found", 404);
+    }
 
     return recipe;
 };
