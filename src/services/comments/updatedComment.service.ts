@@ -3,36 +3,52 @@ import { iCommentRequest } from "../../interfaces/comments/commentsInterface";
 import AppError from "../../errors/appError";
 import { Comment } from "../../entities/coments.entity";
 import { Recipe } from "../../entities/recipes.entity";
+import { User } from "../../entities/users.entity";
+import { userWithoutPasswordSchema } from "../../schemas/users/user.schema";
+import { commentsUpdated } from "../../schemas/comments/comments.schema";
 
 const updatedCommentService = async (
-    commentData: string,
-    comment_id: string,
-    recipe_id: string
+  commentData: iCommentRequest,
+  recipeId: string,
+  commentId: string,
+  userId: string,
 ): Promise<Comment> => {
     try {
-        const commentRepository = AppDataSource.getRepository(Comment)
-        const recipeRepository = AppDataSource.getRepository(Recipe)
+        const commentRepository = AppDataSource.getRepository(Comment);
+        const recipeRepository = AppDataSource.getRepository(Recipe);
+        const userRepository = AppDataSource.getRepository(User);
 
         const findComment = await commentRepository.findOneBy({
-            id: comment_id,
-          })
+            id: commentId,
+        });
 
         const findRecipe = await recipeRepository.findOneBy({
-            id: recipe_id,
-          })
+            id: recipeId,
+        });
 
-          const updatedComment = commentRepository.create({
-            ...findComment,
-            ...findRecipe,
-            description: commentData            
-          })
+        const findUser = await userRepository.findOneBy({
+            id: userId,
+        });
 
-          await commentRepository.save(updatedComment)
+        console.log(commentData)
 
+        const updatedComment = await commentRepository.save({
+            id: findComment.id,
+            user:findUser,
+            recipe: findRecipe,
+            description: commentData.description,
+        });
 
-        return updatedComment
+        const updatedComments = await commentsUpdated.validate(
+          updatedComment,
+          {
+            stripUnknown: true,
+          }
+        )
+
+        return updatedComments;
     } catch (error) {
-        throw new AppError("error.message", 404);
+        throw new AppError(error.message, 404);
     }
 };
 
