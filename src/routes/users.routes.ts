@@ -1,10 +1,12 @@
 import { Router } from "express";
+import { deleteUserController } from "../controllers/admin/deleteUser.service";
 import { listUserFavoriteRecipesController } from "../controllers/users/listUserFavoriteRecipes.controller";
 import { listUserProfileController } from "../controllers/users/listUserProfileController.controller";
 import { patchUserController } from "../controllers/users/patchUserController.controller";
 import { createUserController } from "../controllers/users/createUser.controllers";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuthMiddleware.middleware";
 import ensurePatchDataStructure from "../middlewares/ensurePatchDataStructure.middleware";
+import { ensureUserAdmMiddleware } from "../middlewares/ensureUserAdm.middleware";
 import { verifySchemaMiddleware } from "../middlewares/verifySchema.middleware";
 import { patchDataSchema, userSchema } from "../schemas/users/user.schema";
 import { deleteUserController } from "../controllers/users/deleteUser.controller";
@@ -26,5 +28,7 @@ usersRouter.get(
     listUserFavoriteRecipesController
 );
 usersRouter.delete("/:id", ensureAuthMiddleware, deleteUserController);
+
+usersRouter.delete("",  ensureUserAdmMiddleware, deleteUserController)
 
 export default usersRouter;
