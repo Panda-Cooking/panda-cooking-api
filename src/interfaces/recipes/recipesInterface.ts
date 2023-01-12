@@ -33,3 +33,14 @@ export interface iRecipeResponse {
     ingredients: iIngredientsRecipesResponse[];
     preparations: iPreparationsResponse[];
 }
+
+export interface iFavoriteRecipe {
+    id: string;
+    recipe: {
+        id: string;
+        name: string;
+        description: string;
+        time: string;
+        portions: number;
+    }
+}
