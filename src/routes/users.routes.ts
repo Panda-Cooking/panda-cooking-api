@@ -9,7 +9,6 @@ import ensurePatchDataStructure from "../middlewares/ensurePatchDataStructure.mi
 import { ensureUserAdmMiddleware } from "../middlewares/ensureUserAdm.middleware";
 import { verifySchemaMiddleware } from "../middlewares/verifySchema.middleware";
 import { patchDataSchema, userSchema } from "../schemas/users/user.schema";
-import { deleteUserController } from "../controllers/users/deleteUser.controller";
 
 const usersRouter = Router();
 
@@ -28,7 +27,5 @@ usersRouter.get(
     listUserFavoriteRecipesController
 );
 usersRouter.delete("/:id", ensureAuthMiddleware, deleteUserController);
-
-usersRouter.delete("",  ensureUserAdmMiddleware, deleteUserController)
 
 export default usersRouter;
