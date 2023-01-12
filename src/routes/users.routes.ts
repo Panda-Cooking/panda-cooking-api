@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUserController } from "../controllers/admin/deleteUser.service";
+import { deleteUserController } from "../controllers/admin/deleteUser.controller";
 import { listUserFavoriteRecipesController } from "../controllers/users/listUserFavoriteRecipes.controller";
 import { listUserProfileController } from "../controllers/users/listUserProfileController.controller";
 import { patchUserController } from "../controllers/users/patchUserController.controller";
