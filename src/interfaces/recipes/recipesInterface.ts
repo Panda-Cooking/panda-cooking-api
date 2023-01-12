@@ -26,9 +26,6 @@ export interface iRecipePatchRequest {
     category?: string;
     time?: string;
     portions?: number;
-    imagesRecipes?: iImagesRecipes[];
-    ingredients?: iIngredientsRecipesRequest[];
-    preparations?: iPreparationsRequest[];
 }
 
 export interface iRecipeResponse {
