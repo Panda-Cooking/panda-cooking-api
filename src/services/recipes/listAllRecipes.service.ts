@@ -12,6 +12,7 @@ const listAllRecipesService = async (): Promise<Recipe[]> => {
         .innerJoinAndSelect("recipes.ingredientsRecipes", "ingredientsRecipes")
         .innerJoinAndSelect("ingredientsRecipes.ingredients", "ingredients")
         .innerJoinAndSelect("recipes.preparations", "preparations")
+        .innerJoinAndSelect("recipes.comments", "comments")
         .select([
             "recipes",
             "user.id",
