@@ -23,6 +23,7 @@ import { deleteIngredientOnRecipeController } from "../controllers/recipes/delet
 import { addPreparationOnRecipeController } from "../controllers/recipes/addPreparationOnRecipe.controller";
 import { preparationsSchema } from "../schemas/preparations/preparationsSchema";
 import { patchPreparationOnRecipeController } from "../controllers/recipes/patchPreparationOnRecipe.controller";
+import { deletePreparationOnRecipeController } from "../controllers/recipes/deletePreparationOnRecipe.controller";
 
 const recipesRouter = Router();
 
@@ -84,6 +85,11 @@ recipesRouter.patch(
     ensureAuthMiddleware,
     verifySchemaMiddleware(preparationsSchema),
     patchPreparationOnRecipeController
+);
+recipesRouter.delete(
+    "/:recipeId/preparations/:preparationId",
+    ensureAuthMiddleware,
+    deletePreparationOnRecipeController
 );
 
 recipesRouter.patch(
