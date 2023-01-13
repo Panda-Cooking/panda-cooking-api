@@ -22,6 +22,7 @@ import { ingredientSchema } from "../schemas/ingredientRecipes/ingredientRecipes
 import { deleteIngredientOnRecipeController } from "../controllers/recipes/deleteIngredientOnRecipe.controller";
 import { addPreparationOnRecipeController } from "../controllers/recipes/addPreparationOnRecipe.controller";
 import { preparationsSchema } from "../schemas/preparations/preparationsSchema";
+import { patchPreparationOnRecipeController } from "../controllers/recipes/patchPreparationOnRecipe.controller";
 
 const recipesRouter = Router();
 
@@ -77,6 +78,12 @@ recipesRouter.post(
     ensureAuthMiddleware,
     verifySchemaMiddleware(preparationsSchema),
     addPreparationOnRecipeController
+);
+recipesRouter.patch(
+    "/:recipeId/preparations/:preparationId",
+    ensureAuthMiddleware,
+    verifySchemaMiddleware(preparationsSchema),
+    patchPreparationOnRecipeController
 );
 
 recipesRouter.patch(
