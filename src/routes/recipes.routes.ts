@@ -16,6 +16,8 @@ import {
     recipesSchema,
 } from "../schemas/recipes/recipesSchema";
 import { commentsUpdated } from "../schemas/comments/comments.schema";
+import { addIngredientOnRecipeController } from "../controllers/recipes/addIngredientOnRecipe.controller";
+import verifyRecipeContainsIngredientsMiddleware from "../middlewares/verifyRecipeContainsIngredients.middleware";
 
 const recipesRouter = Router();
 
@@ -45,7 +47,12 @@ recipesRouter.delete(
     ensureAuthMiddleware,
     deleteImageOnRecipeController
 );
-recipesRouter.post("/:recipeId/ingredients", ensureAuthMiddleware);
+recipesRouter.post(
+    "/:recipeId/ingredients",
+    ensureAuthMiddleware,
+    verifyRecipeContainsIngredientsMiddleware,
+    addIngredientOnRecipeController
+);
 recipesRouter.post(
     "",
     ensureAuthMiddleware,
