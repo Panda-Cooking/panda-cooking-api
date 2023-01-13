@@ -18,6 +18,8 @@ import {
 import { commentsUpdated } from "../schemas/comments/comments.schema";
 import { addIngredientOnRecipeController } from "../controllers/recipes/addIngredientOnRecipe.controller";
 import verifyRecipeContainsIngredientsMiddleware from "../middlewares/verifyRecipeContainsIngredients.middleware";
+import { ingredientSchema } from "../schemas/ingredientRecipes/ingredientRecipesSchema";
+import { deleteIngredientOnRecipeController } from "../controllers/recipes/deleteIngredientOnRecipe.controller";
 
 const recipesRouter = Router();
 
@@ -50,8 +52,14 @@ recipesRouter.delete(
 recipesRouter.post(
     "/:recipeId/ingredients",
     ensureAuthMiddleware,
+    verifySchemaMiddleware(ingredientSchema),
     verifyRecipeContainsIngredientsMiddleware,
     addIngredientOnRecipeController
+);
+recipesRouter.delete(
+    "/:recipeId/ingredients/:ingredientId",
+    ensureAuthMiddleware,
+    deleteIngredientOnRecipeController
 );
 recipesRouter.post(
     "",
