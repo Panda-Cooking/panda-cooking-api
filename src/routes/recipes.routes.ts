@@ -20,6 +20,8 @@ import { addIngredientOnRecipeController } from "../controllers/recipes/addIngre
 import verifyRecipeContainsIngredientsMiddleware from "../middlewares/verifyRecipeContainsIngredients.middleware";
 import { ingredientSchema } from "../schemas/ingredientRecipes/ingredientRecipesSchema";
 import { deleteIngredientOnRecipeController } from "../controllers/recipes/deleteIngredientOnRecipe.controller";
+import { addPreparationOnRecipeController } from "../controllers/recipes/addPreparationOnRecipe.controller";
+import { preparationsSchema } from "../schemas/preparations/preparationsSchema";
 
 const recipesRouter = Router();
 
@@ -32,6 +34,13 @@ recipesRouter.patch(
     verifySchemaMiddleware(recipesPacthSchema),
     patchRecipeController
 );
+recipesRouter.post(
+    "",
+    ensureAuthMiddleware,
+    verifySchemaMiddleware(recipesSchema),
+    createRecipeController
+);
+
 recipesRouter.patch(
     "/:recipeId/imagesrecipes/:imageRecipeId",
     ensureAuthMiddleware,
@@ -49,6 +58,7 @@ recipesRouter.delete(
     ensureAuthMiddleware,
     deleteImageOnRecipeController
 );
+
 recipesRouter.post(
     "/:recipeId/ingredients",
     ensureAuthMiddleware,
@@ -61,12 +71,14 @@ recipesRouter.delete(
     ensureAuthMiddleware,
     deleteIngredientOnRecipeController
 );
+
 recipesRouter.post(
-    "",
+    "/:id/preparations",
     ensureAuthMiddleware,
-    verifySchemaMiddleware(recipesSchema),
-    createRecipeController
+    verifySchemaMiddleware(preparationsSchema),
+    addPreparationOnRecipeController
 );
+
 recipesRouter.patch(
     "/:recipe_id/comments/:comment_id",
     ensureAuthMiddleware,
