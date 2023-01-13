@@ -9,12 +9,16 @@ import { listRecipeController } from "../controllers/recipes/listRecipe.controll
 import { patchImageRecipeController } from "../controllers/recipes/patchImageRecipe.controller";
 import { patchRecipeController } from "../controllers/recipes/patchRecipe.controller";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuthMiddleware.middleware";
+import validatedIsAdmMiddleware from "../middlewares/validatedIsAdm.middleware";
 import { verifySchemaMiddleware } from "../middlewares/verifySchema.middleware";
 import { imagesRecipesSchema } from "../schemas/imagesRecipes/imagesRecipes";
 import {
     recipesPacthSchema,
     recipesSchema,
 } from "../schemas/recipes/recipesSchema";
+import { commentsUpdated } from "../schemas/comments/comments.schema";
+import { recipesSchema } from "../schemas/recipes/recipesSchema";
+
 
 const recipesRouter = Router();
 
@@ -53,6 +57,8 @@ recipesRouter.post(
 );
 recipesRouter.patch(
     "/:recipe_id/comments/:comment_id",
+    ensureAuthMiddleware,
+    verifySchemaMiddleware(commentsUpdated),
     updatedCommentController
 );
 
