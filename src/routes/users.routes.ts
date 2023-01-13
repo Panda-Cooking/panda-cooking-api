@@ -12,7 +12,17 @@ const usersRouter = Router();
 
 usersRouter.get("/profile", ensureAuthMiddleware, listUserProfileController);
 usersRouter.post("", verifySchemaMiddleware(userSchema), createUserController);
-usersRouter.patch("/profile", ensureAuthMiddleware, ensurePatchDataStructure, verifySchemaMiddleware(patchDataSchema), patchUserController)
-usersRouter.get("/profile/favoriteRecipes", ensureAuthMiddleware, listUserFavoriteRecipesController)
+usersRouter.patch(
+    "/profile",
+    ensureAuthMiddleware,
+    ensurePatchDataStructure,
+    verifySchemaMiddleware(patchDataSchema),
+    patchUserController
+);
+usersRouter.get(
+    "/profile/favoriteRecipes",
+    ensureAuthMiddleware,
+    listUserFavoriteRecipesController
+);
 
 export default usersRouter;

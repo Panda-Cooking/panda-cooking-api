@@ -10,27 +10,26 @@ const updatedCommentService = async (
     recipe_id: string
 ): Promise<Comment> => {
     try {
-        const commentRepository = AppDataSource.getRepository(Comment)
-        const recipeRepository = AppDataSource.getRepository(Recipe)
+        const commentRepository = AppDataSource.getRepository(Comment);
+        const recipeRepository = AppDataSource.getRepository(Recipe);
 
         const findComment = await commentRepository.findOneBy({
             id: comment_id,
-          })
+        });
 
         const findRecipe = await recipeRepository.findOneBy({
             id: recipe_id,
-          })
+        });
 
-          const updatedComment = commentRepository.create({
+        const updatedComment = commentRepository.create({
             ...findComment,
             ...findRecipe,
-            description: commentData            
-          })
+            description: commentData,
+        });
 
-          await commentRepository.save(updatedComment)
+        await commentRepository.save(updatedComment);
 
-
-        return updatedComment
+        return updatedComment;
     } catch (error) {
         throw new AppError("error.message", 404);
     }

@@ -25,7 +25,7 @@ const createUserService = async (userData: iUserRequest): Promise<any> => {
         }
     );
 
-    return userWithoutPassword
+    return userWithoutPassword;
 };
 
 export default createUserService;

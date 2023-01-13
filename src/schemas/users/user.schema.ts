@@ -15,14 +15,14 @@ const userWithoutPasswordSchema: SchemaOf<iUser> = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
     isAdm: yup.boolean().required(),
-    imageProfile: yup.string()
+    imageProfile: yup.string(),
 });
 
 const patchDataSchema: SchemaOf<iUserUpdate> = yup.object().shape({
     name: yup.string(),
     email: yup.string().email(),
     password: yup.string(),
-    imageProfile: yup.string()
-})
+    imageProfile: yup.string(),
+});
 
 export { userSchema, userWithoutPasswordSchema, patchDataSchema };
