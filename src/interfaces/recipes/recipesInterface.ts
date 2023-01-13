@@ -20,6 +20,13 @@ export interface iRecipeRequest {
     ingredients: iIngredientsRecipesRequest[];
     preparations: iPreparationsRequest[];
 }
+export interface iRecipePatchRequest {
+    name?: string;
+    description?: string;
+    category?: string;
+    time?: string;
+    portions?: number;
+}
 
 export interface iRecipeResponse {
     id: string;
