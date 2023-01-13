@@ -17,6 +17,15 @@ const setDataSourceConfig = (): DataSourceOptions => {
         };
     }
 
+    if (nodeEnv === "tests") {
+        return {
+            type: "sqlite",
+            database: ":memory:",
+            synchronize: true,
+            entities: [entitiesPath],
+        };
+    }
+
     return {
         type: "postgres",
         database: process.env.DB_NAME,
