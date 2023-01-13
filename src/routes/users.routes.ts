@@ -26,6 +26,6 @@ usersRouter.get(
     ensureAuthMiddleware,
     listUserFavoriteRecipesController
 );
-usersRouter.delete("/:id", ensureAuthMiddleware, deleteUserController);
+usersRouter.delete("/profile", ensureAuthMiddleware, deleteUserController);
 
 export default usersRouter;
