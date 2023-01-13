@@ -10,6 +10,7 @@ import { patchImageRecipeController } from "../controllers/recipes/patchImageRec
 import { patchRecipeController } from "../controllers/recipes/patchRecipe.controller";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuthMiddleware.middleware";
 import { verifySchemaMiddleware } from "../middlewares/verifySchema.middleware";
+import { imagesRecipesSchema } from "../schemas/imagesRecipes/imagesRecipes";
 import {
     recipesPacthSchema,
     recipesSchema,
@@ -29,11 +30,13 @@ recipesRouter.patch(
 recipesRouter.patch(
     "/:recipeId/imagesrecipes/:imageRecipeId",
     ensureAuthMiddleware,
+    verifySchemaMiddleware(imagesRecipesSchema),
     patchImageRecipeController
 );
 recipesRouter.post(
     "/:recipeId/imagesrecipes",
     ensureAuthMiddleware,
+    verifySchemaMiddleware(imagesRecipesSchema),
     addImageOnRecipeController
 );
 recipesRouter.delete(
@@ -41,6 +44,7 @@ recipesRouter.delete(
     ensureAuthMiddleware,
     deleteImageOnRecipeController
 );
+recipesRouter.post("/:recipeId/ingredients", ensureAuthMiddleware);
 recipesRouter.post(
     "",
     ensureAuthMiddleware,
