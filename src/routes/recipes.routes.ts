@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { updatedCommentController } from "../controllers/comments/updatedComment.controller";
+import { addImageOnRecipeController } from "../controllers/recipes/addImageOnRecipe.controller";
 import { createRecipeController } from "../controllers/recipes/createRecipe.controller";
 import { deleteRecipeController } from "../controllers/recipes/deleteRecipe.controller";
 import { listAllRecipesController } from "../controllers/recipes/listAllRecipes.controller";
@@ -28,6 +29,11 @@ recipesRouter.patch(
     "/:recipeId/imagesrecipes/:imageRecipeId",
     ensureAuthMiddleware,
     patchImageRecipeController
+);
+recipesRouter.post(
+    "/:recipeId/imagesrecipes",
+    ensureAuthMiddleware,
+    addImageOnRecipeController
 );
 recipesRouter.post(
     "",
