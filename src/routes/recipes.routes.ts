@@ -2,6 +2,7 @@ import { Router } from "express";
 import { updatedCommentController } from "../controllers/comments/updatedComment.controller";
 import { addImageOnRecipeController } from "../controllers/recipes/addImageOnRecipe.controller";
 import { createRecipeController } from "../controllers/recipes/createRecipe.controller";
+import { deleteImageOnRecipeController } from "../controllers/recipes/deleteImageOnRecipe.controller";
 import { deleteRecipeController } from "../controllers/recipes/deleteRecipe.controller";
 import { listAllRecipesController } from "../controllers/recipes/listAllRecipes.controller";
 import { listRecipeController } from "../controllers/recipes/listRecipe.controller";
@@ -34,6 +35,11 @@ recipesRouter.post(
     "/:recipeId/imagesrecipes",
     ensureAuthMiddleware,
     addImageOnRecipeController
+);
+recipesRouter.delete(
+    "/:recipeId/imagesrecipes/:imageRecipeId",
+    ensureAuthMiddleware,
+    deleteImageOnRecipeController
 );
 recipesRouter.post(
     "",
