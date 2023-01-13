@@ -1,13 +1,16 @@
-import { DataSource, DataSourceOptions } from "typeorm";
-import "reflect-metadata";
-import "dotenv/config";
-import path from "path";
-
-const setDataSourceConfig = (): DataSourceOptions => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const typeorm_1 = require("typeorm");
+require("reflect-metadata");
+require("dotenv/config");
+const path_1 = __importDefault(require("path"));
+const setDataSourceConfig = () => {
     const nodeEnv = process.env.NODE_ENV;
-    const entitiesPath = path.join(__dirname, "./entities/**.{js,ts}");
-    const migrationsPath = path.join(__dirname, "./migrations/**.{js,ts}");
-
+    const entitiesPath = path_1.default.join(__dirname, "./entities/**.{js,ts}");
+    const migrationsPath = path_1.default.join(__dirname, "./migrations/**.{js,ts}");
     if (nodeEnv === "production") {
         return {
             type: "postgres",
@@ -16,7 +19,6 @@ const setDataSourceConfig = (): DataSourceOptions => {
             migrations: [migrationsPath],
         };
     }
-
     return {
         type: "postgres",
         database: process.env.DB_NAME,
@@ -30,9 +32,6 @@ const setDataSourceConfig = (): DataSourceOptions => {
         migrations: [migrationsPath],
     };
 };
-
 const configDb = setDataSourceConfig();
-
-const AppDataSource = new DataSource(configDb);
-
-export default AppDataSource;
+const AppDataSource = new typeorm_1.DataSource(configDb);
+exports.default = AppDataSource;
