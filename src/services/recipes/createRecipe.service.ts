@@ -9,6 +9,7 @@ import { User } from "../../entities/users.entity";
 import AppError from "../../errors/appError";
 import { iRecipeRequest } from "../../interfaces/recipes/recipesInterface";
 import { recipesSchemaResponse } from "../../schemas/recipes/recipesSchema";
+import createIngredientsService from "./createIngredients.service";
 
 const createRecipeService = async (
     userAuthId: string,
@@ -17,9 +18,6 @@ const createRecipeService = async (
     const recipesRepo = AppDataSource.getRepository(Recipe);
     const categoryRepo = AppDataSource.getRepository(Category);
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
-    const ingredientsRecipesRepo =
-        AppDataSource.getRepository(IngredientsRecipes);
-    const ingredientsRepo = AppDataSource.getRepository(Ingredients);
     const preparationsRepo = AppDataSource.getRepository(Preparations);
     const userRepo = AppDataSource.getRepository(User);
 
@@ -53,28 +51,7 @@ const createRecipeService = async (
     });
 
     recipeData.ingredients.forEach(async (ingredient) => {
-        const ingredientName = ingredient.name;
-        const ingredientAmount = ingredient.amount;
-
-        let findIngredient = await ingredientsRepo.findOneBy({
-            name: ingredientName,
-        });
-
-        if (!findIngredient) {
-            const newIngredient = ingredientsRepo.create({
-                name: ingredientName,
-            });
-
-            findIngredient = await ingredientsRepo.save(newIngredient);
-        }
-
-        const newIngredientToRecipes = ingredientsRecipesRepo.create({
-            ingredients: findIngredient,
-            recipe: newRecipeSaved,
-            amount: ingredientAmount,
-        });
-
-        await ingredientsRecipesRepo.save(newIngredientToRecipes);
+        await createIngredientsService(ingredient, newRecipe.id);
     });
 
     recipeData.preparations.forEach(async (preparation) => {
