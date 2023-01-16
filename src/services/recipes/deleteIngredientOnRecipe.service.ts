@@ -30,10 +30,6 @@ const deleteIngredientOnRecipeService = async (
         throw new AppError("Ingredient or recipe not found", 404);
     }
 
-    if (findIngredientOnRecipe.recipe.user.id !== userId) {
-        throw new AppError("User is not author of recipe", 403);
-    }
-
     await ingredientsRecipesRepo.remove(findIngredientOnRecipe);
 
     return {};

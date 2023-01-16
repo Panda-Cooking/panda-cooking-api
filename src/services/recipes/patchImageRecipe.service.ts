@@ -29,10 +29,6 @@ const patchImageRecipeService = async (
         throw new AppError("Image or recipe not found", 404);
     }
 
-    if (userId !== findImageRecipe.recipe.user.id) {
-        throw new AppError("User cannot change image of another recipe", 403);
-    }
-
     const imagesRecipeUpdated = await imagesRecipesRepo.save({
         ...findImageRecipe,
         url: newImage.url,

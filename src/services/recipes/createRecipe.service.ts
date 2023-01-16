@@ -1,8 +1,6 @@
 import AppDataSource from "../../data-source";
 import { Category } from "../../entities/categories.entity";
 import { ImagesRecipes } from "../../entities/imagesRecipes.entity";
-import { Ingredients } from "../../entities/ingredients.entity";
-import { IngredientsRecipes } from "../../entities/ingredientsRecipes.entity";
 import { Preparations } from "../../entities/preparations.entity";
 import { Recipe } from "../../entities/recipes.entity";
 import { User } from "../../entities/users.entity";
@@ -51,7 +49,7 @@ const createRecipeService = async (
     });
 
     recipeData.ingredients.forEach(async (ingredient) => {
-        await createIngredientsService(ingredient, newRecipe.id);
+        await createIngredientsService(ingredient, newRecipeSaved.id);
     });
 
     recipeData.preparations.forEach(async (preparation) => {

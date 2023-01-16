@@ -27,10 +27,6 @@ const addImageOnRecipeService = async (
         throw new AppError("Recipe not found", 404);
     }
 
-    if (findRecipe.recipe.user.id !== userId) {
-        throw new AppError("User is not the author of the recipe", 403);
-    }
-
     const newImageOnRecipe = imagesRecipesRepo.create({
         url: newImage.url,
         recipe: findRecipe.recipe,

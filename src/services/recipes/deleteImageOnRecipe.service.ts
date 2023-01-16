@@ -27,10 +27,6 @@ const deleteImageOnRecipeService = async (
         throw new AppError("Recipe or image not found", 404);
     }
 
-    if (findImageRecipe.recipe.user.id !== userId) {
-        throw new AppError("User is not the author of the recipe", 403);
-    }
-
     await imagesRecipesRepo.remove(findImageRecipe);
 
     return {};

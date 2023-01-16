@@ -27,10 +27,6 @@ const deletePreparationOnRecipeService = async (
         throw new AppError("Preparation not found", 404);
     }
 
-    if (findPreparation.recipe.user.id !== userId) {
-        throw new AppError("User is not author on recipe", 403);
-    }
-
     await preparationsRepo.remove(findPreparation);
 
     return {};

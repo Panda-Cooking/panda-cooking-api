@@ -27,10 +27,6 @@ const addIngredientOnRecipeService = async (
         throw new AppError("Recipe not found", 404);
     }
 
-    if (findRecipe.user.id !== userId) {
-        throw new AppError("User is not author on recipe", 403);
-    }
-
     ingredients.forEach(async (ingredient) => {
         await createIngredientsService(ingredient, findRecipe.id);
     });

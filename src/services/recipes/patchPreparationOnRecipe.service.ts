@@ -26,10 +26,6 @@ const patchPreparationOnRecipeService = async (
         throw new AppError("Recipe not found", 404);
     }
 
-    if (findRecipe.user.id !== userId) {
-        throw new AppError("User is not author of recipe", 403);
-    }
-
     const findPreparation = await preparationsRepo.findOne({
         where: {
             id: preparationId,
