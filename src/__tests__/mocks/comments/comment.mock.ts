@@ -5,6 +5,11 @@ export const mockedCommentCreation: iCommentRequest = {
     userId: "",
     recipeId: ""
 };
+export const mockedAdminCommentCreation: iCommentRequest = {
+    description: "descrição de Admin",
+    userId: "",
+    recipeId: ""
+};
 
 export const mockedCommentCreationInvalidUserId: iCommentRequest = {
     description: "descrição de teste",
