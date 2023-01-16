@@ -5,8 +5,7 @@ import { iImagesRecipes } from "../../interfaces/imagesRecipes/imagesRecipes";
 
 const addImageOnRecipeService = async (
     newImage: iImagesRecipes,
-    recipeId: string,
-    userId: string
+    recipeId: string
 ): Promise<object> => {
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
 
@@ -14,11 +13,6 @@ const addImageOnRecipeService = async (
         where: {
             recipe: {
                 id: recipeId,
-            },
-        },
-        relations: {
-            recipe: {
-                user: true,
             },
         },
     });

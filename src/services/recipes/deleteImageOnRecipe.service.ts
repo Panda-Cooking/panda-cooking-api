@@ -4,8 +4,7 @@ import AppError from "../../errors/appError";
 
 const deleteImageOnRecipeService = async (
     recipeId: string,
-    imageRecipeId: string,
-    userId: string
+    imageRecipeId: string
 ): Promise<object> => {
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
 
@@ -14,11 +13,6 @@ const deleteImageOnRecipeService = async (
             id: imageRecipeId,
             recipe: {
                 id: recipeId,
-            },
-        },
-        relations: {
-            recipe: {
-                user: true,
             },
         },
     });

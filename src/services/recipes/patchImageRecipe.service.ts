@@ -6,9 +6,8 @@ import { iImagesRecipes } from "../../interfaces/imagesRecipes/imagesRecipes";
 const patchImageRecipeService = async (
     recipeId: string,
     imageRecipeId: string,
-    userId: string,
     newImage: iImagesRecipes
-) => {
+): Promise<ImagesRecipes> => {
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
 
     const findImageRecipe = await imagesRecipesRepo.findOne({
@@ -16,11 +15,6 @@ const patchImageRecipeService = async (
             id: imageRecipeId,
             recipe: {
                 id: recipeId,
-            },
-        },
-        relations: {
-            recipe: {
-                user: true,
             },
         },
     });

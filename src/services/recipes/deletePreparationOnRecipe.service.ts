@@ -4,8 +4,7 @@ import AppError from "../../errors/appError";
 
 const deletePreparationOnRecipeService = async (
     recipeId: string,
-    preparationId: string,
-    userId: string
+    preparationId: string
 ): Promise<object> => {
     const preparationsRepo = AppDataSource.getRepository(Preparations);
 
@@ -14,11 +13,6 @@ const deletePreparationOnRecipeService = async (
             id: preparationId,
             recipe: {
                 id: recipeId,
-            },
-        },
-        relations: {
-            recipe: {
-                user: true,
             },
         },
     });

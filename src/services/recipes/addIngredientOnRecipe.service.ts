@@ -6,9 +6,8 @@ import createIngredientsService from "./createIngredients.service";
 
 const addIngredientOnRecipeService = async (
     ingredients: iIngredientsRecipesRequest[],
-    recipeId: string,
-    userId: string
-): Promise<{}> => {
+    recipeId: string
+): Promise<object> => {
     const recipeRepo = AppDataSource.getRepository(Recipe);
 
     const findRecipe = await recipeRepo.findOne({
@@ -16,7 +15,6 @@ const addIngredientOnRecipeService = async (
             id: recipeId,
         },
         relations: {
-            user: true,
             ingredientsRecipes: {
                 ingredients: true,
             },

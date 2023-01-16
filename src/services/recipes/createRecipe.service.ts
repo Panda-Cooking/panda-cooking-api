@@ -5,14 +5,17 @@ import { Preparations } from "../../entities/preparations.entity";
 import { Recipe } from "../../entities/recipes.entity";
 import { User } from "../../entities/users.entity";
 import AppError from "../../errors/appError";
-import { iRecipeRequest } from "../../interfaces/recipes/recipesInterface";
+import {
+    iRecipeRequest,
+    iRecipeResponse,
+} from "../../interfaces/recipes/recipesInterface";
 import { recipesSchemaResponse } from "../../schemas/recipes/recipesSchema";
 import createIngredientsService from "./createIngredients.service";
 
 const createRecipeService = async (
     userAuthId: string,
     recipeData: iRecipeRequest
-) => {
+): Promise<iRecipeResponse> => {
     const recipesRepo = AppDataSource.getRepository(Recipe);
     const categoryRepo = AppDataSource.getRepository(Category);
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);

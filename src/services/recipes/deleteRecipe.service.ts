@@ -5,7 +5,7 @@ import AppError from "../../errors/appError";
 const deleteRecipeService = async (
     userId: string,
     recipeId: string
-): Promise<{}> => {
+): Promise<object> => {
     const recipeRepo = AppDataSource.getRepository(Recipe);
 
     const findRecipe = await recipeRepo.findOne({
@@ -14,9 +14,6 @@ const deleteRecipeService = async (
             user: {
                 id: userId,
             },
-        },
-        relations: {
-            user: true,
         },
     });
 

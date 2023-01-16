@@ -3,9 +3,8 @@ import { IngredientsRecipes } from "../../entities/ingredientsRecipes.entity";
 import AppError from "../../errors/appError";
 
 const deleteIngredientOnRecipeService = async (
-    recipeId,
-    ingredientId,
-    userId
+    recipeId: string,
+    ingredientId: string
 ): Promise<object> => {
     const ingredientsRecipesRepo =
         AppDataSource.getRepository(IngredientsRecipes);
@@ -17,11 +16,6 @@ const deleteIngredientOnRecipeService = async (
             },
             recipe: {
                 id: recipeId,
-            },
-        },
-        relations: {
-            recipe: {
-                user: true,
             },
         },
     });

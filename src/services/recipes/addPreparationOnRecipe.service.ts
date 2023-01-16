@@ -10,7 +10,6 @@ import { preparationsSchema } from "../../schemas/preparations/preparationsSchem
 
 const addPreparationOnRecipeService = async (
     recipeId: string,
-    userId: string,
     newPreparation: iPreparationsRequest
 ): Promise<iPreparationsResponse> => {
     const recipeRepo = AppDataSource.getRepository(Recipe);
@@ -19,9 +18,6 @@ const addPreparationOnRecipeService = async (
     const findRecipe = await recipeRepo.findOne({
         where: {
             id: recipeId,
-        },
-        relations: {
-            user: true,
         },
     });
 

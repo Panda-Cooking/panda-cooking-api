@@ -8,7 +8,7 @@ const patchRecipeService = async (
     recipeId: string,
     userId: string,
     recipeData: iRecipePatchRequest
-) => {
+): Promise<Recipe> => {
     const recipesRepo = AppDataSource.getRepository(Recipe);
     const categoryRepo = AppDataSource.getRepository(Category);
 
