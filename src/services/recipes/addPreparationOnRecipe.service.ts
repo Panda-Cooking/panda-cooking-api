@@ -25,7 +25,7 @@ const addPreparationOnRecipeService = async (
         throw new AppError("Recipe not found", 404);
     }
 
-    const preparationCreate = await preparationsRepo.create({
+    const preparationCreate = preparationsRepo.create({
         description: newPreparation.description,
         recipe: findRecipe,
     });
