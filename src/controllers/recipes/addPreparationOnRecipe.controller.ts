@@ -7,7 +7,6 @@ export const addPreparationOnRecipeController = async (
 ) => {
     const data = await addPreparationOnRecipeService(
         req.params.recipeId,
-        req.userId,
         req.body
     );
 
