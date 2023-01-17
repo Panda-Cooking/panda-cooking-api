@@ -1,3 +1,4 @@
+import { iImagesRecipes } from "../../../interfaces/imagesRecipes/imagesRecipes";
 import {
     iRecipePatchRequest,
     iRecipeRequest,
@@ -44,4 +45,12 @@ const mockedRecipeUpdateRequest: iRecipePatchRequest = {
     portions: 4,
 };
 
-export { mockedRecipeRequest, mockedRecipeUpdateRequest };
+const mockedImagesRecipesRequest: iImagesRecipes = {
+    url: "http://urldeteste.com",
+};
+
+export {
+    mockedRecipeRequest,
+    mockedRecipeUpdateRequest,
+    mockedImagesRecipesRequest,
+};

@@ -7,12 +7,12 @@ import {
     mockedUserRequest,
 } from "../../mocks/users/user.mock";
 import {
+    mockedImagesRecipesRequest,
     mockedRecipeRequest,
-    mockedRecipeUpdateRequest,
 } from "../../mocks/recipes";
 import { Category } from "../../../entities/categories.entity";
 
-describe("Update recipe route tests", () => {
+describe("Add images on recipe route tests", () => {
     let conn: DataSource;
     const baseUrl = "/recipes";
 
@@ -32,7 +32,7 @@ describe("Update recipe route tests", () => {
         await conn.destroy();
     });
 
-    test("PATCH /recipes/:id - Should be able to update recipe", async () => {
+    test("POST /recipes/:id/imagesrecipes - Should be able to add image on recipe", async () => {
         const userLogin = await request(app)
             .post("/auth")
             .send(mockedUserLoginRequest);
@@ -45,20 +45,15 @@ describe("Update recipe route tests", () => {
         const responseAllRecipes = await request(app).get(baseUrl).send();
 
         const response = await request(app)
-            .patch(`${baseUrl}/${responseAllRecipes.body[0].id}`)
+            .post(`${baseUrl}/${responseAllRecipes.body[0].id}/imagesrecipes`)
             .set("Authorization", `Bearer ${userLogin.body.token}`)
-            .send(mockedRecipeUpdateRequest);
+            .send(mockedImagesRecipesRequest);
 
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("id");
-        expect(response.body).toHaveProperty("name");
-        expect(response.body).toHaveProperty("description");
-        expect(response.body).toHaveProperty("time");
-        expect(response.body).toHaveProperty("portions");
-        expect(response.body).toHaveProperty("category");
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty("message");
     });
 
-    test("PATCH /recipes/:id - Should not be able to update recipe without authorizaton", async () => {
+    test("POST /recipes/:id/imagesrecipes - Should not be able to add image on recipe without authorization", async () => {
         const userLogin = await request(app)
             .post("/auth")
             .send(mockedUserLoginRequest);
@@ -71,27 +66,24 @@ describe("Update recipe route tests", () => {
         const responseAllRecipes = await request(app).get(baseUrl).send();
 
         const response = await request(app)
-            .patch(`${baseUrl}/${responseAllRecipes.body[0].id}`)
-            .send(mockedRecipeUpdateRequest);
+            .post(`${baseUrl}/${responseAllRecipes.body[0].id}/imagesrecipes`)
+            .send(mockedImagesRecipesRequest);
 
         expect(response.status).toBe(401);
         expect(response.body).toHaveProperty("message");
     });
 
-    test("PATCH /recipes/:id - Should not be able to update recipe with invalid id", async () => {
+    test("POST /recipes/:id/imagesrecipes - Should not be able to add image on recipe with invalid id", async () => {
         const userLogin = await request(app)
             .post("/auth")
             .send(mockedUserLoginRequest);
 
-        await request(app)
-            .post(baseUrl)
-            .set("Authorization", `Bearer ${userLogin.body.token}`)
-            .send(mockedRecipeRequest);
-
         const response = await request(app)
-            .patch(`${baseUrl}/324dab7d-aac1-4b90-b962-298bb6e95a91`)
+            .post(
+                `${baseUrl}/324dab7d-aac1-4b90-b962-298bb6e95a91/imagesrecipes`
+            )
             .set("Authorization", `Bearer ${userLogin.body.token}`)
-            .send(mockedRecipeUpdateRequest);
+            .send(mockedImagesRecipesRequest);
 
         expect(response.status).toBe(404);
         expect(response.body).toHaveProperty("message");
