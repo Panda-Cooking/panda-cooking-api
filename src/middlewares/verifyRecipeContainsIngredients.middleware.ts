@@ -14,8 +14,8 @@ const verifyRecipeContainsIngredientsMiddleware = async (
     const ingredientList: iIngredientsRecipesRequest[] = req.body.ingredients;
     const recipeId: string = req.params.id;
 
-    ingredientList.forEach(async (ingredient) => {
-        const ingredientName = ingredient.name.toLowerCase();
+    for (let i = 0; i < ingredientList.length; i++) {
+        const ingredientName = ingredientList[i].name.toLowerCase();
 
         const findIngredientOnRecipe = await ingredientsRecipesRepo.findOne({
             where: {
@@ -36,9 +36,9 @@ const verifyRecipeContainsIngredientsMiddleware = async (
                 message: "Recipe already has ingredient",
             });
         }
-    });
+    }
 
-    next();
+    return next();
 };
 
 export default verifyRecipeContainsIngredientsMiddleware;
