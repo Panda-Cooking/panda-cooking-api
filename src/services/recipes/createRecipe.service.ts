@@ -42,27 +42,33 @@ const createRecipeService = async (
 
     const newRecipeSaved = await recipesRepo.save(newRecipe);
 
-    recipeData.imagesRecipes.forEach(async (image) => {
+    for (let i = 0; i < recipeData.imagesRecipes.length; i++) {
+        const image = recipeData.imagesRecipes[i];
+
         const newImage = imagesRecipesRepo.create({
             ...image,
             recipe: newRecipeSaved,
         });
 
         await imagesRecipesRepo.save(newImage);
-    });
+    }
 
-    recipeData.ingredients.forEach(async (ingredient) => {
+    for (let i = 0; i < recipeData.ingredients.length; i++) {
+        const ingredient = recipeData.ingredients[i];
+
         await createIngredientsService(ingredient, newRecipeSaved.id);
-    });
+    }
 
-    recipeData.preparations.forEach(async (preparation) => {
+    for (let i = 0; i < recipeData.preparations.length; i++) {
+        const preparation = recipeData.preparations[i];
+
         const newPreparation = preparationsRepo.create({
             ...preparation,
             recipe: newRecipeSaved,
         });
 
         await preparationsRepo.save(newPreparation);
-    });
+    }
 
     newRecipeSaved["ingredients"] = recipeData.ingredients;
 

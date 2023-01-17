@@ -39,8 +39,33 @@ describe("Create recipe route tests", () => {
             .set("Authorization", `Bearer ${userLogin.body.token}`)
             .send(mockedRecipeRequest);
 
-        console.log(response.body);
-
         expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty("id");
+        expect(response.body).toHaveProperty("name");
+        expect(response.body).toHaveProperty("description");
+        expect(response.body).toHaveProperty("category");
+        expect(response.body).toHaveProperty("time");
+        expect(response.body).toHaveProperty("portions");
+        expect(response.body).toHaveProperty("user");
+        expect(response.body.user).not.toHaveProperty("password");
+        expect(response.body).toHaveProperty("imagesRecipes");
+        expect(response.body).toHaveProperty("ingredients");
+        expect(response.body).toHaveProperty("preparations");
+    });
+
+    test("POST /recipes - Cannot create recipe without category", async () => {
+        const userLogin = await request(app)
+            .post("/auth")
+            .send(mockedUserLoginRequest);
+
+        const { category, ...recipeWithoutCategory } = mockedRecipeRequest;
+
+        const response = await request(app)
+            .post(baseUrl)
+            .set("Authorization", `Bearer ${userLogin.body.token}`)
+            .send(recipeWithoutCategory);
+
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("message");
     });
 });
