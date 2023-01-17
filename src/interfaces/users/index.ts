@@ -32,3 +32,12 @@ export interface iUserUpdate {
     password?: string;
     imageProfile?: string;
 }
+
+export interface iUserBadUpdate {
+    name?: string;
+    email?: string;
+    password?: string;
+    imageProfile?: string;
+    id?: string;
+    isAdm?: boolean;
+}
