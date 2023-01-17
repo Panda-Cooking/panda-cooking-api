@@ -180,4 +180,49 @@ describe("Comments routes test", () => {
         expect(response.status).toBe(404)
     })
 
+    test("PATCH /recipes/:recipeId/comments/:commentId -  should be able to update comment", async () => {
+        const newValues = { description: "comentario modificado" };
+
+        const LoginResponse = await request(app)
+            .post("/auth")
+            .send(mockedUserLoginRequest);
+        const token = `Bearer ${LoginResponse.body.token}`;
+
+        const commentTobeUpdateRequest = await request(app)
+            .get("/comments")
+        const commentTobeUpdateId = commentTobeUpdateRequest.body[0].id;
+
+        const recipeTobeUpdateRequest = await request(app)
+            .get("/recipes")
+            .set("Authorization", token);
+        const recipeTobeUpdateId = recipeTobeUpdateRequest.body[0].id;
+
+        const response = await request(app)
+            .patch(
+                `/recipes/${recipeTobeUpdateId}/comments/${commentTobeUpdateId}`
+            )
+            .set("Authorization", token)
+            .send(newValues);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("id");
+        expect(response.body).toHaveProperty("description");
+        expect(response.body).toHaveProperty("updatedAt");
+
+        expect(response.body).toHaveProperty("user");
+        expect(response.body.user).not.toHaveProperty("password");
+        expect(response.body.user).toHaveProperty("isAdm");
+        expect(response.body.user).toHaveProperty("imageProfile");
+        expect(response.body.user).toHaveProperty("email");
+        expect(response.body.user).toHaveProperty("name");
+        expect(response.body.user).toHaveProperty("id");
+
+        expect(response.body).toHaveProperty("recipe");
+        expect(response.body.recipe.id).toHaveProperty("id");
+        expect(response.body.recipe.name).toHaveProperty("name");
+        expect(response.body.recipe.description).toHaveProperty("description");
+        expect(response.body.recipe.time).toHaveProperty("time");
+        expect(response.body.recipe.portions).toHaveProperty("portions");
+    });
+
 });
