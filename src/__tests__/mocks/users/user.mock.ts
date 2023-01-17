@@ -1,4 +1,4 @@
-import { iUserLogin, iUserRequest, iUserResponse } from "../../../interfaces/users";
+import { iUserLogin, iUserRequest, iUserUpdate, iUserBadUpdate } from "../../../interfaces/users";
 
 const mockedUserRequest: iUserRequest = {
     name: "Irineu",
@@ -12,7 +12,18 @@ const mockedUserLoginRequest: iUserLogin = {
     password: "irineu123"
 }
 
+const mockedUserPatchRequest: iUserUpdate = {
+    name: "manuel gomes"
+}
+
+const mockedUserPatchBadRequest: iUserBadUpdate = {
+    name: "toguro",
+    isAdm: true
+}
+
 export {
     mockedUserRequest,
-    mockedUserLoginRequest
+    mockedUserLoginRequest,
+    mockedUserPatchRequest,
+    mockedUserPatchBadRequest
 }
