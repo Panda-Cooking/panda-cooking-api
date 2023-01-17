@@ -25,9 +25,10 @@ const addIngredientOnRecipeService = async (
         throw new AppError("Recipe not found", 404);
     }
 
-    ingredients.forEach(async (ingredient) => {
+    for (let i = 0; i < ingredients.length; i++) {
+        const ingredient = ingredients[i];
         await createIngredientsService(ingredient, findRecipe.id);
-    });
+    }
 
     return {
         message: "Ingredients added",

@@ -28,6 +28,12 @@ const updatedCommentService = async (
     const findRecipe = await recipeRepository.findOneBy({
         id: recipeId,
     });
+    if (!findComment) {
+        throw new AppError("comment not found", 404);
+    }
+    if (!findRecipe) {
+        throw new AppError("recipe not found", 404);
+    }
 
     const findUser = await userRepository.findOne({
         where: {

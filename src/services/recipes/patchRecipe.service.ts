@@ -20,13 +20,7 @@ const patchRecipeService = async (
             },
         },
         relations: {
-            user: true,
             category: true,
-            imagesRecipes: true,
-            ingredientsRecipes: {
-                ingredients: true,
-            },
-            preparations: true,
         },
     });
 
@@ -36,32 +30,27 @@ const patchRecipeService = async (
             404
         );
     }
-    const categoryRecipe = await categoryRepo.findOneBy({
-        name: recipeData.category.toLowerCase(),
-    });
 
-    if (!categoryRecipe) {
-        throw new AppError("Recipe cannot be registered without category.");
+    const newDataRecipe = { ...recipeData, category: findRecipe.category };
+
+    if (recipeData.category) {
+        const category = await categoryRepo.findOneBy({
+            name: recipeData.category.toLowerCase(),
+        });
+
+        newDataRecipe["category"] = category;
+
+        if (!category) {
+            throw new AppError("Recipe cannot be registered without category.");
+        }
     }
 
-    const updateRecipe = await recipesRepo
-        .createQueryBuilder("recipes")
-        .innerJoin("recipes.category", "category")
-        .update()
-        .set({
-            name: recipeData.name,
-            description: recipeData.description,
-            time: recipeData.time,
-            portions: recipeData.portions,
-            category: categoryRecipe,
-        })
-        .where("recipes.id = :id", {
-            id: findRecipe.id,
-        })
-        .returning("*")
-        .execute();
+    const recipeUpdated = await recipesRepo.save({
+        ...findRecipe,
+        ...newDataRecipe,
+    });
 
-    return updateRecipe.raw[0];
+    return recipeUpdated;
 };
 
 export default patchRecipeService;
