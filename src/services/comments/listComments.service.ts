@@ -17,9 +17,9 @@ const listCommentsService = async (): Promise<Comment[]> => {
                 "user.email",
                 "user.imageProfile",
                 "user.isAdm",
-                "recipe"
-            ]).
-        getMany();
+                "recipe",
+            ])
+            .getMany();
 
         return comments;
     } catch (error) {

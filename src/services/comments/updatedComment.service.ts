@@ -13,14 +13,13 @@ const updatedCommentService = async (
     recipeId: string,
     commentId: string,
     userId: string
-    ): Promise<iCommentUpdated> => {
-        
-        const commentRepository = AppDataSource.getRepository(Comment);
-        const recipeRepository = AppDataSource.getRepository(Recipe);
-        const userRepository = AppDataSource.getRepository(User);
+): Promise<iCommentUpdated> => {
+    const commentRepository = AppDataSource.getRepository(Comment);
+    const recipeRepository = AppDataSource.getRepository(Recipe);
+    const userRepository = AppDataSource.getRepository(User);
 
-        const commentQueryBuilder = commentRepository.createQueryBuilder("comment");
-        
+    const commentQueryBuilder = commentRepository.createQueryBuilder("comment");
+
     const findComment = await commentRepository.findOneBy({
         id: commentId,
     });
@@ -37,7 +36,7 @@ const updatedCommentService = async (
 
     const findUser = await userRepository.findOne({
         where: {
-            id: userId
+            id: userId,
         },
         relations: {
             comments: {
@@ -46,52 +45,54 @@ const updatedCommentService = async (
         },
     });
 
-    if(!findRecipe){
+    if (!findRecipe) {
         throw new AppError("Recipe not found", 404);
     }
 
-    if(!findComment){
+    if (!findComment) {
         throw new AppError("Comment not found", 404);
     }
-    
-    if(!findUser){
+
+    if (!findUser) {
         throw new AppError("User not found", 404);
-    };
+    }
 
     const commentary = await commentQueryBuilder
-    .leftJoinAndSelect("comment.user", "users")
-    .leftJoinAndSelect("comment.recipe", "recipes")
-    .where("comment.id = :id", { id: commentId })
-    .getOne();
-
-    const isAdm = findUser.isAdm;
-    
-    if (commentary.user.id !== userId) {
-        if(isAdm === false){
-            throw new AppError("Missing admin permissions", 403);
-        }
-    }
-    
-    try {
-        await commentRepository.update({id: commentId},{
-            description: commentData.description
-        });
-
-        const commentReturn = await commentQueryBuilder
-        .leftJoinAndSelect("comment.user", "user")
-        .leftJoinAndSelect("comment.recipe", "recipe")
-        .select([
-            "comment",
-            "user.id",
-            "user.name",
-            "user.email",
-            "user.imageProfile",
-            "user.isAdm",
-            "recipe"
-        ])
+        .leftJoinAndSelect("comment.user", "users")
+        .leftJoinAndSelect("comment.recipe", "recipes")
         .where("comment.id = :id", { id: commentId })
         .getOne();
 
+    const isAdm = findUser.isAdm;
+
+    if (commentary.user.id !== userId) {
+        if (isAdm === false) {
+            throw new AppError("Missing admin permissions", 403);
+        }
+    }
+
+    try {
+        await commentRepository.update(
+            { id: commentId },
+            {
+                description: commentData.description,
+            }
+        );
+
+        const commentReturn = await commentQueryBuilder
+            .leftJoinAndSelect("comment.user", "user")
+            .leftJoinAndSelect("comment.recipe", "recipe")
+            .select([
+                "comment",
+                "user.id",
+                "user.name",
+                "user.email",
+                "user.imageProfile",
+                "user.isAdm",
+                "recipe",
+            ])
+            .where("comment.id = :id", { id: commentId })
+            .getOne();
 
         return commentReturn;
     } catch (error) {

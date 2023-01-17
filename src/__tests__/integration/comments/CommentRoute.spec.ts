@@ -338,36 +338,35 @@ describe("Comments routes test", () => {
         expect(response.status).toBe(404);
     });
 
-    test("PATCH /recipes/:recipeId/comments/:commentId - should not be able to update other users comment", async () =>{
+    test("PATCH /recipes/:recipeId/comments/:commentId - should not be able to update other users comment", async () => {
         const newValues = { description: "testando edição 3" };
         const recipes = await request(app).get("/recipes");
         const adminLoginResponse = await request(app)
-        .post("/auth")
-        .send(mockedAdminLoginRequest);
-    
+            .post("/auth")
+            .send(mockedAdminLoginRequest);
+
         const admin = await request(app)
-        .get("/users/profile")
-        .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
-    
+            .get("/users/profile")
+            .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+
         mockedAdminCommentCreation.userId = admin.body.id;
         mockedAdminCommentCreation.recipeId = recipes.body[0].id;
-    
+
         await request(app)
-        .post("/comments")
-        .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
-        .send(mockedAdminCommentCreation);
-        
+            .post("/comments")
+            .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+            .send(mockedAdminCommentCreation);
+
         const loginResponse = await request(app)
-        .post("/auth")
-        .send(mockedUserLoginRequest);
+            .post("/auth")
+            .send(mockedUserLoginRequest);
 
         const user = await request(app)
-        .get("/users/profile")
-        .set("Authorization", `Bearer ${loginResponse.body.token}`);
-        const commentTobeUpdateRequest = (await request(app).get("/comments")).body.filter((comment) => comment.user.id !== user.body.id);
-
-        console.log(user.body)
-        console.log(commentTobeUpdateRequest)
+            .get("/users/profile")
+            .set("Authorization", `Bearer ${loginResponse.body.token}`);
+        const commentTobeUpdateRequest = (
+            await request(app).get("/comments")
+        ).body.filter((comment) => comment.user.id !== user.body.id);
 
         const commentTobeUpdateId = commentTobeUpdateRequest[0].id;
 
@@ -377,23 +376,23 @@ describe("Comments routes test", () => {
 
         const recipeTobeUpdateId = recipeTobeUpdateRequest.body[0].id;
 
-        const response = await request(app).patch(`/recipes/${recipeTobeUpdateId}/comments/${commentTobeUpdateId}`)
-        .set("Authorization", `Bearer ${loginResponse.body.token}`)
-        .send(newValues)
+        const response = await request(app)
+            .patch(
+                `/recipes/${recipeTobeUpdateId}/comments/${commentTobeUpdateId}`
+            )
+            .set("Authorization", `Bearer ${loginResponse.body.token}`)
+            .send(newValues);
 
-        console.log(response.body)
+        expect(response.body).toHaveProperty("message");
+        expect(response.status).toBe(403);
+    });
 
-        expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(403)
-
-    })
-
-    test("PATCH /recipes/:recipeId/comments/:commentId - Admin should be able to update other users comment", async () =>{
+    test("PATCH /recipes/:recipeId/comments/:commentId - Admin should be able to update other users comment", async () => {
         const newValues = { description: "testando edição 2" };
 
         const adminLoginResponse = await request(app)
-        .post("/auth")
-        .send(mockedAdminLoginRequest);
+            .post("/auth")
+            .send(mockedAdminLoginRequest);
 
         const commentTobeUpdateRequest = await request(app).get("/comments");
 
@@ -405,9 +404,12 @@ describe("Comments routes test", () => {
 
         const recipeTobeUpdateId = recipeTobeUpdateRequest.body[0].id;
 
-        const response = await request(app).patch(`/recipes/${recipeTobeUpdateId}/comments/${commentTobeUpdateId}`)
-        .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
-        .send(newValues)
+        const response = await request(app)
+            .patch(
+                `/recipes/${recipeTobeUpdateId}/comments/${commentTobeUpdateId}`
+            )
+            .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
+            .send(newValues);
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("id");
@@ -428,11 +430,11 @@ describe("Comments routes test", () => {
         expect(response.body.recipe).toHaveProperty("description");
         expect(response.body.recipe).toHaveProperty("time");
         expect(response.body.recipe).toHaveProperty("portions");
-    })
+    });
 
-    test("GET /comments - should be able to list all comments", async () =>{
-        const response = await request(app).get("/comments")
+    test("GET /comments - should be able to list all comments", async () => {
+        const response = await request(app).get("/comments");
 
-        expect(response.status).toBe(200)
-    })
+        expect(response.status).toBe(200);
+    });
 });
