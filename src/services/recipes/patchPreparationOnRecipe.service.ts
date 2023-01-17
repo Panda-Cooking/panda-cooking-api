@@ -1,34 +1,14 @@
 import AppDataSource from "../../data-source";
 import { Preparations } from "../../entities/preparations.entity";
-import { Recipe } from "../../entities/recipes.entity";
 import AppError from "../../errors/appError";
 import { iPreparationsRequest } from "../../interfaces/preparations/preparationsInterface";
 
 const patchPreparationOnRecipeService = async (
     recipeId: string,
     preparationId: string,
-    dataPreparation: iPreparationsRequest,
-    userId: string
-) => {
-    const recipeRepo = AppDataSource.getRepository(Recipe);
+    dataPreparation: iPreparationsRequest
+): Promise<Preparations> => {
     const preparationsRepo = AppDataSource.getRepository(Preparations);
-
-    const findRecipe = await recipeRepo.findOne({
-        where: {
-            id: recipeId,
-        },
-        relations: {
-            user: true,
-        },
-    });
-
-    if (!findRecipe) {
-        throw new AppError("Recipe not found", 404);
-    }
-
-    if (findRecipe.user.id !== userId) {
-        throw new AppError("User is not author of recipe", 403);
-    }
 
     const findPreparation = await preparationsRepo.findOne({
         where: {

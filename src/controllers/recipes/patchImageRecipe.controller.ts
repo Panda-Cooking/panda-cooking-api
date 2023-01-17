@@ -9,7 +9,6 @@ export const patchImageRecipeController = async (
     const data = await patchImageRecipeService(
         req.params.recipeId,
         req.params.imageRecipeId,
-        req.userId,
         req.body
     );
 

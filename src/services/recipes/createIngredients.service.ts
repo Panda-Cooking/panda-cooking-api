@@ -3,7 +3,6 @@ import { Ingredients } from "../../entities/ingredients.entity";
 import { IngredientsRecipes } from "../../entities/ingredientsRecipes.entity";
 import { Recipe } from "../../entities/recipes.entity";
 import AppError from "../../errors/appError";
-
 import { iIngredientsRecipesRequest } from "../../interfaces/ingredientsRecipes/ingredientsRecipesInterface";
 
 const createIngredientsService = async (

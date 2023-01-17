@@ -1,20 +1,21 @@
 import AppDataSource from "../../data-source";
 import { Category } from "../../entities/categories.entity";
 import { ImagesRecipes } from "../../entities/imagesRecipes.entity";
-import { Ingredients } from "../../entities/ingredients.entity";
-import { IngredientsRecipes } from "../../entities/ingredientsRecipes.entity";
 import { Preparations } from "../../entities/preparations.entity";
 import { Recipe } from "../../entities/recipes.entity";
 import { User } from "../../entities/users.entity";
 import AppError from "../../errors/appError";
-import { iRecipeRequest } from "../../interfaces/recipes/recipesInterface";
+import {
+    iRecipeRequest,
+    iRecipeResponse,
+} from "../../interfaces/recipes/recipesInterface";
 import { recipesSchemaResponse } from "../../schemas/recipes/recipesSchema";
 import createIngredientsService from "./createIngredients.service";
 
 const createRecipeService = async (
     userAuthId: string,
     recipeData: iRecipeRequest
-) => {
+): Promise<iRecipeResponse> => {
     const recipesRepo = AppDataSource.getRepository(Recipe);
     const categoryRepo = AppDataSource.getRepository(Category);
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
@@ -41,27 +42,33 @@ const createRecipeService = async (
 
     const newRecipeSaved = await recipesRepo.save(newRecipe);
 
-    recipeData.imagesRecipes.forEach(async (image) => {
+    for (let i = 0; i < recipeData.imagesRecipes.length; i++) {
+        const image = recipeData.imagesRecipes[i];
+
         const newImage = imagesRecipesRepo.create({
             ...image,
             recipe: newRecipeSaved,
         });
 
         await imagesRecipesRepo.save(newImage);
-    });
+    }
 
-    recipeData.ingredients.forEach(async (ingredient) => {
-        await createIngredientsService(ingredient, newRecipe.id);
-    });
+    for (let i = 0; i < recipeData.ingredients.length; i++) {
+        const ingredient = recipeData.ingredients[i];
 
-    recipeData.preparations.forEach(async (preparation) => {
+        await createIngredientsService(ingredient, newRecipeSaved.id);
+    }
+
+    for (let i = 0; i < recipeData.preparations.length; i++) {
+        const preparation = recipeData.preparations[i];
+
         const newPreparation = preparationsRepo.create({
             ...preparation,
             recipe: newRecipeSaved,
         });
 
         await preparationsRepo.save(newPreparation);
-    });
+    }
 
     newRecipeSaved["ingredients"] = recipeData.ingredients;
 

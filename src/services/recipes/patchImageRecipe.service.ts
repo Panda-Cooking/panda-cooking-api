@@ -6,9 +6,8 @@ import { iImagesRecipes } from "../../interfaces/imagesRecipes/imagesRecipes";
 const patchImageRecipeService = async (
     recipeId: string,
     imageRecipeId: string,
-    userId: string,
     newImage: iImagesRecipes
-) => {
+): Promise<ImagesRecipes> => {
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
 
     const findImageRecipe = await imagesRecipesRepo.findOne({
@@ -18,19 +17,10 @@ const patchImageRecipeService = async (
                 id: recipeId,
             },
         },
-        relations: {
-            recipe: {
-                user: true,
-            },
-        },
     });
 
     if (!findImageRecipe) {
         throw new AppError("Image or recipe not found", 404);
-    }
-
-    if (userId !== findImageRecipe.recipe.user.id) {
-        throw new AppError("User cannot change image of another recipe", 403);
     }
 
     const imagesRecipeUpdated = await imagesRecipesRepo.save({

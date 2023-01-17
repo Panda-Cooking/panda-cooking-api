@@ -7,8 +7,7 @@ export const addIngredientOnRecipeController = async (
 ) => {
     const data = await addIngredientOnRecipeService(
         req.body.ingredients,
-        req.params.recipeId,
-        req.userId
+        req.params.recipeId
     );
 
     return res.status(201).json(data);

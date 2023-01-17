@@ -5,8 +5,7 @@ import { iImagesRecipes } from "../../interfaces/imagesRecipes/imagesRecipes";
 
 const addImageOnRecipeService = async (
     newImage: iImagesRecipes,
-    recipeId: string,
-    userId: string
+    recipeId: string
 ): Promise<object> => {
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
 
@@ -16,19 +15,10 @@ const addImageOnRecipeService = async (
                 id: recipeId,
             },
         },
-        relations: {
-            recipe: {
-                user: true,
-            },
-        },
     });
 
     if (!findRecipe) {
         throw new AppError("Recipe not found", 404);
-    }
-
-    if (findRecipe.recipe.user.id !== userId) {
-        throw new AppError("User is not the author of the recipe", 403);
     }
 
     const newImageOnRecipe = imagesRecipesRepo.create({
