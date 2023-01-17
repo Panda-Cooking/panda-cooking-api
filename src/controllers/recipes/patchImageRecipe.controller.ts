@@ -5,7 +5,6 @@ export const patchImageRecipeController = async (
     req: Request,
     res: Response
 ) => {
-    console.log(req.params);
     const data = await patchImageRecipeService(
         req.params.recipeId,
         req.params.imageRecipeId,

@@ -54,15 +54,6 @@ describe("Add images on recipe route tests", () => {
     });
 
     test("POST /recipes/:id/imagesrecipes - Should not be able to add image on recipe without authorization", async () => {
-        const userLogin = await request(app)
-            .post("/auth")
-            .send(mockedUserLoginRequest);
-
-        await request(app)
-            .post(baseUrl)
-            .set("Authorization", `Bearer ${userLogin.body.token}`)
-            .send(mockedRecipeRequest);
-
         const responseAllRecipes = await request(app).get(baseUrl).send();
 
         const response = await request(app)

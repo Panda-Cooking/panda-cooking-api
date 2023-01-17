@@ -49,8 +49,13 @@ const mockedImagesRecipesRequest: iImagesRecipes = {
     url: "http://urldeteste.com",
 };
 
+const mockedImagesRecipesUpdateRequest: iImagesRecipes = {
+    url: "http://urlatualizadadeteste.com",
+};
+
 export {
     mockedRecipeRequest,
     mockedRecipeUpdateRequest,
     mockedImagesRecipesRequest,
+    mockedImagesRecipesUpdateRequest,
 };
