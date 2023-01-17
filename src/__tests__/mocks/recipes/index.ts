@@ -1,7 +1,10 @@
-import { iRecipeRequest } from "../../../interfaces/recipes/recipesInterface";
+import {
+    iRecipePatchRequest,
+    iRecipeRequest,
+} from "../../../interfaces/recipes/recipesInterface";
 
 const mockedRecipeRequest: iRecipeRequest = {
-    name: "receita de teste 2",
+    name: "receita de teste",
     description: "essa descrição é um teste",
     category: "lanches",
     time: "25",
@@ -34,4 +37,11 @@ const mockedRecipeRequest: iRecipeRequest = {
     ],
 };
 
-export { mockedRecipeRequest };
+const mockedRecipeUpdateRequest: iRecipePatchRequest = {
+    name: "receita de teste atualizada",
+    description: "essa descrição é um teste atualizado",
+    time: "20",
+    portions: 4,
+};
+
+export { mockedRecipeRequest, mockedRecipeUpdateRequest };
