@@ -1,4 +1,5 @@
 import { iImagesRecipes } from "../../../interfaces/imagesRecipes/imagesRecipes";
+import { iIngredientsRecipesRequest } from "../../../interfaces/ingredientsRecipes/ingredientsRecipesInterface";
 import {
     iRecipePatchRequest,
     iRecipeRequest,
@@ -53,9 +54,23 @@ const mockedImagesRecipesUpdateRequest: iImagesRecipes = {
     url: "http://urlatualizadadeteste.com",
 };
 
+const mockedIngredientsRequest = {
+    ingredients: [
+        {
+            amount: "1/2",
+            name: "ingredient4",
+        },
+        {
+            amount: "1/2",
+            name: "ingredient5",
+        },
+    ],
+};
+
 export {
     mockedRecipeRequest,
     mockedRecipeUpdateRequest,
     mockedImagesRecipesRequest,
     mockedImagesRecipesUpdateRequest,
+    mockedIngredientsRequest,
 };
