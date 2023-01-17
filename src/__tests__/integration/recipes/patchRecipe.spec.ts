@@ -53,9 +53,47 @@ describe("Create recipe route tests", () => {
         expect(response.body).toHaveProperty("id");
         expect(response.body).toHaveProperty("name");
         expect(response.body).toHaveProperty("description");
-        expect(response.body).toHaveProperty("categoryId");
         expect(response.body).toHaveProperty("time");
         expect(response.body).toHaveProperty("portions");
-        expect(response.body).toHaveProperty("userId");
+        expect(response.body).toHaveProperty("category");
+    });
+
+    test("PATCH /recipes/:id - Should not be able to update recipe without authorizaton", async () => {
+        const userLogin = await request(app)
+            .post("/auth")
+            .send(mockedUserLoginRequest);
+
+        await request(app)
+            .post(baseUrl)
+            .set("Authorization", `Bearer ${userLogin.body.token}`)
+            .send(mockedRecipeRequest);
+
+        const responseAllRecipes = await request(app).get(baseUrl).send();
+
+        const response = await request(app)
+            .patch(`${baseUrl}/${responseAllRecipes.body[0].id}`)
+            .send(mockedRecipeUpdateRequest);
+
+        expect(response.status).toBe(401);
+        expect(response.body).toHaveProperty("message");
+    });
+
+    test("PATCH /recipes/:id - Should not be able to update recipe with invalid id", async () => {
+        const userLogin = await request(app)
+            .post("/auth")
+            .send(mockedUserLoginRequest);
+
+        await request(app)
+            .post(baseUrl)
+            .set("Authorization", `Bearer ${userLogin.body.token}`)
+            .send(mockedRecipeRequest);
+
+        const response = await request(app)
+            .patch(`${baseUrl}/324dab7d-aac1-4b90-b962-298bb6e95a91`)
+            .set("Authorization", `Bearer ${userLogin.body.token}`)
+            .send(mockedRecipeUpdateRequest);
+
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty("message");
     });
 });
