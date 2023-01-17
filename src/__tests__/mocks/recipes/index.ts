@@ -67,10 +67,20 @@ const mockedIngredientsRequest = {
     ],
 };
 
+const mockedPreparationRequest = {
+    description: "new mode preparation",
+};
+
+const mockedPreparationUpdateRequest = {
+    description: "mode preparation updated",
+};
+
 export {
     mockedRecipeRequest,
     mockedRecipeUpdateRequest,
     mockedImagesRecipesRequest,
     mockedImagesRecipesUpdateRequest,
     mockedIngredientsRequest,
+    mockedPreparationRequest,
+    mockedPreparationUpdateRequest,
 };

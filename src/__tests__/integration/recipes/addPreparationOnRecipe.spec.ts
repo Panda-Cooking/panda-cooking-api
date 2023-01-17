@@ -7,12 +7,12 @@ import {
     mockedUserRequest,
 } from "../../mocks/users/user.mock";
 import {
-    mockedIngredientsRequest,
+    mockedPreparationRequest,
     mockedRecipeRequest,
 } from "../../mocks/recipes";
 import { Category } from "../../../entities/categories.entity";
 
-describe("Add ingredients on recipe route tests", () => {
+describe("Add preparations on recipe route tests", () => {
     let conn: DataSource;
     const baseUrl = "/recipes";
 
@@ -32,21 +32,7 @@ describe("Add ingredients on recipe route tests", () => {
         await conn.destroy();
     });
 
-    test("POST /recipes/:id/ingredients - Should not be able to add ingredients on recipe with invalid id", async () => {
-        const userLogin = await request(app)
-            .post("/auth")
-            .send(mockedUserLoginRequest);
-
-        const response = await request(app)
-            .post(`${baseUrl}/324dab7d-aac1-4b90-b962-298bb6e95a91/ingredients`)
-            .set("Authorization", `Bearer ${userLogin.body.token}`)
-            .send(mockedIngredientsRequest);
-
-        expect(response.status).toBe(404);
-        expect(response.body).toHaveProperty("message");
-    });
-
-    test("POST /recipes/:id/ingredients - Should be able to add ingredients on recipe", async () => {
+    test("POST /recipes/:id/preparations - Should be able to add preparations on recipe", async () => {
         const userLogin = await request(app)
             .post("/auth")
             .send(mockedUserLoginRequest);
@@ -59,38 +45,38 @@ describe("Add ingredients on recipe route tests", () => {
         const responseAllRecipes = await request(app).get(baseUrl).send();
 
         const response = await request(app)
-            .post(`${baseUrl}/${responseAllRecipes.body[0].id}/ingredients`)
+            .post(`${baseUrl}/${responseAllRecipes.body[0].id}/preparations`)
             .set("Authorization", `Bearer ${userLogin.body.token}`)
-            .send(mockedIngredientsRequest);
+            .send(mockedPreparationRequest);
 
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty("message");
     });
 
-    test("POST /recipes/:id/ingredients - Should not be able to add ingredients on recipe without authorization", async () => {
+    test("POST /recipes/:id/preparations - Should not be able to add preparations on recipe without authorization", async () => {
         const responseAllRecipes = await request(app).get(baseUrl).send();
 
         const response = await request(app)
-            .post(`${baseUrl}/${responseAllRecipes.body[0].id}/ingredients`)
-            .send(mockedIngredientsRequest);
+            .post(`${baseUrl}/${responseAllRecipes.body[0].id}/preparations`)
+            .send(mockedPreparationRequest);
 
         expect(response.status).toBe(401);
         expect(response.body).toHaveProperty("message");
     });
 
-    test("POST /recipes/:id/ingredients - Shouldn't be able to add ingredients in recipe if recipe already has ingredients", async () => {
+    test("POST /recipes/:id/preparations - Should not be able to add preparations on recipe with invalid id", async () => {
         const userLogin = await request(app)
             .post("/auth")
             .send(mockedUserLoginRequest);
 
-        const responseAllRecipes = await request(app).get(baseUrl).send();
-
         const response = await request(app)
-            .post(`${baseUrl}/${responseAllRecipes.body[0].id}/ingredients`)
+            .post(
+                `${baseUrl}/324dab7d-aac1-4b90-b962-298bb6e95a91/preparations`
+            )
             .set("Authorization", `Bearer ${userLogin.body.token}`)
-            .send(mockedIngredientsRequest);
+            .send(mockedPreparationRequest);
 
-        expect(response.status).toBe(409);
+        expect(response.status).toBe(404);
         expect(response.body).toHaveProperty("message");
     });
 });
