@@ -1,8 +1,9 @@
 import AppDataSource from "../../data-source";
 import { Recipe } from "../../entities/recipes.entity";
 import AppError from "../../errors/appError";
+import { recipeByIdSchemaResponse } from "../../schemas/recipes/recipesSchema";
 
-const listRecipeService = async (recipeId: string): Promise<Recipe> => {
+const listRecipeService = async (recipeId: string): Promise<object> => {
     const recipeRepo = AppDataSource.getRepository(Recipe);
 
     const recipe = await recipeRepo.findOne({
@@ -25,7 +26,11 @@ const listRecipeService = async (recipeId: string): Promise<Recipe> => {
         throw new AppError("Recipe not found", 404);
     }
 
-    return recipe;
+    const recipeReturnData = await recipeByIdSchemaResponse.validate(recipe, {
+        stripUnknown: true,
+    });
+
+    return recipeReturnData;
 };
 
 export default listRecipeService;

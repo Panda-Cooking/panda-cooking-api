@@ -7,8 +7,7 @@ export const deleteImageOnRecipeController = async (
 ) => {
     const data = await deleteImageOnRecipeService(
         req.params.recipeId,
-        req.params.imageRecipeId,
-        req.userId
+        req.params.imageRecipeId
     );
 
     return res.status(204).json(data);

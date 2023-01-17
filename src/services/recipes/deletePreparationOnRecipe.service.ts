@@ -4,8 +4,7 @@ import AppError from "../../errors/appError";
 
 const deletePreparationOnRecipeService = async (
     recipeId: string,
-    preparationId: string,
-    userId: string
+    preparationId: string
 ): Promise<object> => {
     const preparationsRepo = AppDataSource.getRepository(Preparations);
 
@@ -16,19 +15,10 @@ const deletePreparationOnRecipeService = async (
                 id: recipeId,
             },
         },
-        relations: {
-            recipe: {
-                user: true,
-            },
-        },
     });
 
     if (!findPreparation) {
         throw new AppError("Preparation not found", 404);
-    }
-
-    if (findPreparation.recipe.user.id !== userId) {
-        throw new AppError("User is not author on recipe", 403);
     }
 
     await preparationsRepo.remove(findPreparation);

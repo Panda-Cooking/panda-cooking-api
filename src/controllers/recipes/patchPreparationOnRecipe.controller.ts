@@ -8,8 +8,7 @@ export const patchPreparationOnRecipeController = async (
     const data = await patchPreparationOnRecipeService(
         req.params.recipeId,
         req.params.preparationId,
-        req.body,
-        req.userId
+        req.body
     );
 
     return res.status(200).json(data);

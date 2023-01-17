@@ -10,7 +10,6 @@ import { preparationsSchema } from "../../schemas/preparations/preparationsSchem
 
 const addPreparationOnRecipeService = async (
     recipeId: string,
-    userId: string,
     newPreparation: iPreparationsRequest
 ): Promise<iPreparationsResponse> => {
     const recipeRepo = AppDataSource.getRepository(Recipe);
@@ -20,20 +19,13 @@ const addPreparationOnRecipeService = async (
         where: {
             id: recipeId,
         },
-        relations: {
-            user: true,
-        },
     });
 
     if (!findRecipe) {
         throw new AppError("Recipe not found", 404);
     }
 
-    if (findRecipe.user.id !== userId) {
-        throw new AppError("User is not author on recipe", 403);
-    }
-
-    const preparationCreate = await preparationsRepo.create({
+    const preparationCreate = preparationsRepo.create({
         description: newPreparation.description,
         recipe: findRecipe,
     });

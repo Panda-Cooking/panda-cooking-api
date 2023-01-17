@@ -4,8 +4,7 @@ import AppError from "../../errors/appError";
 
 const deleteImageOnRecipeService = async (
     recipeId: string,
-    imageRecipeId: string,
-    userId: string
+    imageRecipeId: string
 ): Promise<object> => {
     const imagesRecipesRepo = AppDataSource.getRepository(ImagesRecipes);
 
@@ -16,19 +15,10 @@ const deleteImageOnRecipeService = async (
                 id: recipeId,
             },
         },
-        relations: {
-            recipe: {
-                user: true,
-            },
-        },
     });
 
     if (!findImageRecipe) {
         throw new AppError("Recipe or image not found", 404);
-    }
-
-    if (findImageRecipe.recipe.user.id !== userId) {
-        throw new AppError("User is not the author of the recipe", 403);
     }
 
     await imagesRecipesRepo.remove(findImageRecipe);

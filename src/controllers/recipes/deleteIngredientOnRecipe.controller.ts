@@ -7,8 +7,7 @@ export const deleteIngredientOnRecipeController = async (
 ) => {
     const data = await deleteIngredientOnRecipeService(
         req.params.recipeId,
-        req.params.ingredientId,
-        req.userId
+        req.params.ingredientId
     );
 
     return res.status(204).json(data);

@@ -24,6 +24,7 @@ import { addPreparationOnRecipeController } from "../controllers/recipes/addPrep
 import { preparationsSchema } from "../schemas/preparations/preparationsSchema";
 import { patchPreparationOnRecipeController } from "../controllers/recipes/patchPreparationOnRecipe.controller";
 import { deletePreparationOnRecipeController } from "../controllers/recipes/deletePreparationOnRecipe.controller";
+import verifyUserIsAuthorOnRecipeMiddleware from "../middlewares/verifyUserIsAuthorOnRecipe.middleware";
 
 const recipesRouter = Router();
 
@@ -47,17 +48,20 @@ recipesRouter.patch(
     "/:recipeId/imagesrecipes/:imageRecipeId",
     ensureAuthMiddleware,
     verifySchemaMiddleware(imagesRecipesSchema),
+    verifyUserIsAuthorOnRecipeMiddleware,
     patchImageRecipeController
 );
 recipesRouter.post(
     "/:recipeId/imagesrecipes",
     ensureAuthMiddleware,
     verifySchemaMiddleware(imagesRecipesSchema),
+    verifyUserIsAuthorOnRecipeMiddleware,
     addImageOnRecipeController
 );
 recipesRouter.delete(
     "/:recipeId/imagesrecipes/:imageRecipeId",
     ensureAuthMiddleware,
+    verifyUserIsAuthorOnRecipeMiddleware,
     deleteImageOnRecipeController
 );
 
@@ -66,29 +70,34 @@ recipesRouter.post(
     ensureAuthMiddleware,
     verifySchemaMiddleware(ingredientSchema),
     verifyRecipeContainsIngredientsMiddleware,
+    verifyUserIsAuthorOnRecipeMiddleware,
     addIngredientOnRecipeController
 );
 recipesRouter.delete(
     "/:recipeId/ingredients/:ingredientId",
     ensureAuthMiddleware,
+    verifyUserIsAuthorOnRecipeMiddleware,
     deleteIngredientOnRecipeController
 );
 
 recipesRouter.post(
-    "/:id/preparations",
+    "/:recipeId/preparations",
     ensureAuthMiddleware,
     verifySchemaMiddleware(preparationsSchema),
+    verifyUserIsAuthorOnRecipeMiddleware,
     addPreparationOnRecipeController
 );
 recipesRouter.patch(
     "/:recipeId/preparations/:preparationId",
     ensureAuthMiddleware,
     verifySchemaMiddleware(preparationsSchema),
+    verifyUserIsAuthorOnRecipeMiddleware,
     patchPreparationOnRecipeController
 );
 recipesRouter.delete(
     "/:recipeId/preparations/:preparationId",
     ensureAuthMiddleware,
+    verifyUserIsAuthorOnRecipeMiddleware,
     deletePreparationOnRecipeController
 );
 

@@ -7,8 +7,7 @@ export const deletePreparationOnRecipeController = async (
 ) => {
     const data = await deletePreparationOnRecipeService(
         req.params.recipeId,
-        req.params.preparationId,
-        req.userId
+        req.params.preparationId
     );
 
     return res.status(204).json(data);

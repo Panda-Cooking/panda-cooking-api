@@ -5,11 +5,7 @@ export const addImageOnRecipeController = async (
     req: Request,
     res: Response
 ) => {
-    const data = await addImageOnRecipeService(
-        req.body,
-        req.params.recipeId,
-        req.userId
-    );
+    const data = await addImageOnRecipeService(req.body, req.params.recipeId);
 
     return res.status(201).json(data);
 };
