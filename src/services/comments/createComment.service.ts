@@ -33,7 +33,25 @@ const createCommentService = async (
         { user: user, recipe: recipe }
     );
 
-    return comment;
+    const commentQueryBuilder = commentaryRepo.createQueryBuilder("comment");
+
+
+    const commentReturn = await commentQueryBuilder
+    .leftJoinAndSelect("comment.user", "user")
+    .leftJoinAndSelect("comment.recipe", "recipe")
+    .select([
+        "comment",
+        "user.id",
+        "user.name",
+        "user.email",
+        "user.imageProfile",
+        "recipe"
+])
+    .where("comment.id = :id", { id: comment.id })
+    .getOne();
+
+
+    return commentReturn;
 };
 
 export default createCommentService;

@@ -90,4 +90,68 @@ const recipesSchemaResponse: yup.SchemaOf<iRecipeResponse> = yup.object({
     id: yup.string().required(),
 });
 
-export { recipesSchema, recipesSchemaResponse, recipesPacthSchema };
+const recipeByIdSchemaResponse = yup.object({
+    comments: yup.array().of(
+        yup
+            .object({
+                id: yup.string().required(),
+                description: yup.string().required(),
+                createdAt: yup.string().required(),
+                updatedAt: yup.string().required(),
+            })
+            .required()
+    ),
+    preparations: yup
+        .array()
+        .of(
+            yup.object({
+                id: yup.string().required(),
+                description: yup.string().required(),
+            })
+        )
+        .required(),
+    ingredientsRecipes: yup
+        .array()
+        .of(
+            yup.object({
+                id: yup.string().required(),
+                amount: yup.string().required(),
+                ingredients: yup
+                    .object({
+                        id: yup.string().required(),
+                        name: yup.string().required(),
+                    })
+                    .required(),
+            })
+        )
+        .required(),
+    imagesRecipes: yup.array().of(
+        yup.object({
+            id: yup.string().required(),
+            url: yup.string().required(),
+        })
+    ),
+    user: yup.object({
+        id: yup.string().required(),
+        name: yup.string().required(),
+        email: yup.string().required(),
+        imageProfile: yup.string().required(),
+        isAdm: yup.boolean().required(),
+    }),
+    portions: yup.number().required(),
+    time: yup.string().required(),
+    category: yup.object({
+        id: yup.string().required(),
+        name: yup.string().required(),
+    }),
+    description: yup.string().required(),
+    name: yup.string().required(),
+    id: yup.string().required(),
+});
+
+export {
+    recipesSchema,
+    recipesSchemaResponse,
+    recipesPacthSchema,
+    recipeByIdSchemaResponse,
+};

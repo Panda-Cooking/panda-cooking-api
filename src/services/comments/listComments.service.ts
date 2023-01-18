@@ -9,14 +9,17 @@ const listCommentsService = async (): Promise<Comment[]> => {
         const comments = await commentRepository
             .createQueryBuilder("comments")
             .innerJoinAndSelect("comments.user", "user")
+            .leftJoinAndSelect("comments.recipe", "recipe")
             .select([
                 "comments",
                 "user.id",
                 "user.name",
                 "user.email",
                 "user.imageProfile",
-            ]).
-        getMany();
+                "user.isAdm",
+                "recipe",
+            ])
+            .getMany();
 
         return comments;
     } catch (error) {
