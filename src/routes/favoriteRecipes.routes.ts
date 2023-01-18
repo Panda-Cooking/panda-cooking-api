@@ -10,6 +10,10 @@ favoriteRecipesRouter.post(
     ensureAuthMiddleware,
     addFavoriteRecipeController
 );
-favoriteRecipesRouter.delete("", deleteFavoriteRecipeController);
+favoriteRecipesRouter.delete(
+    "/:id",
+    ensureAuthMiddleware,
+    deleteFavoriteRecipeController
+);
 
 export default favoriteRecipesRouter;
