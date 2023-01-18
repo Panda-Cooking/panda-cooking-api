@@ -37,6 +37,16 @@ describe("Favorite recipes route test", () =>{
         await connection.destroy()
     })
 
+    test("GET /users/profile/favoriteRecipes - Should be able to list user favorite recipes", async () =>{
+        const loginResponse = await request(app)
+        .post("/auth")
+        .send(mockedUserLoginRequest);
+
+        const response = await request(app).get("/users/profile/favoriterecipes").set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        expect(response.status).toBe(200)
+    })
+
     test("POST /favoriterecipes/:id - Should be able to add a favorite recipe", async () =>{
         const recipes = await request(app).get("/recipes");
 
@@ -85,4 +95,35 @@ describe("Favorite recipes route test", () =>{
         expect(response.status).toBe(409)
     })
 
+    test("DELETE /favoriterecipes/:id - Should be able to remove recipe from favorites", async() => {
+        const recipes = await request(app).get("/recipes");
+
+        const loginResponse = await request(app)
+        .post("/auth")
+        .send(mockedUserLoginRequest);
+
+        const response = await request(app).delete(`/favoriterecipes/${recipes.body[0].id}`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        expect(response.status).toBe(204)
+    })
+
+    test("DELETE /favoriterecipes/:id - Shouldn't be able to remove recipe from favorites without authentication", async () =>{
+        const recipes = await request(app).get("/recipes");
+
+        const response = await request(app).delete(`/favoriterecipes/${recipes.body[0].id}`)
+
+        expect(response.body).toHaveProperty("message")
+        expect(response.status).toBe(401)
+    })
+
+    test("DELETE /favoriterecipes/:id - Shouldn't be able to remove recipe from favorites with invalid recipeId", async () =>{
+        const loginResponse = await request(app)
+        .post("/auth")
+        .send(mockedUserLoginRequest);
+
+        const response = await request(app).delete(`/favoriterecipes/711d91f1-89b7-478c-815e-144128f601e2`).set("Authorization", `Bearer ${loginResponse.body.token}`)
+
+        expect(response.body).toHaveProperty("message")
+        expect(response.status).toBe(404)
+    })
 })
