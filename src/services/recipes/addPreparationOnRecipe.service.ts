@@ -6,12 +6,11 @@ import {
     iPreparationsRequest,
     iPreparationsResponse,
 } from "../../interfaces/preparations/preparationsInterface";
-import { preparationsSchema } from "../../schemas/preparations/preparationsSchema";
 
 const addPreparationOnRecipeService = async (
     recipeId: string,
     newPreparation: iPreparationsRequest
-): Promise<iPreparationsResponse> => {
+): Promise<object> => {
     const recipeRepo = AppDataSource.getRepository(Recipe);
     const preparationsRepo = AppDataSource.getRepository(Preparations);
 
@@ -32,14 +31,9 @@ const addPreparationOnRecipeService = async (
 
     await preparationsRepo.save(preparationCreate);
 
-    const removeUserResponse = await preparationsSchema.validate(
-        preparationCreate,
-        {
-            stripUnknown: true,
-        }
-    );
-
-    return removeUserResponse;
+    return {
+        message: "Mode preparation added",
+    };
 };
 
 export default addPreparationOnRecipeService;

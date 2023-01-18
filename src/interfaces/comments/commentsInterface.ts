@@ -1,5 +1,12 @@
-import { iRecipeRequest } from "../recipes/recipesInterface";
 import { iUserResponse } from "../users";
+
+export interface iCommentRecipeResponse {
+    id: string;
+    name: string;
+    description: string;
+    time: string;
+    portions: number;
+}
 
 export interface iCommentRequest {
     description: string;
@@ -12,6 +19,8 @@ export interface iCommentResponse {
     description: string;
     createdAt: Date;
     updatedAt: Date;
+    user: iUserResponse;
+    recipe: iCommentRecipeResponse;
 }
 
 export interface iComment {

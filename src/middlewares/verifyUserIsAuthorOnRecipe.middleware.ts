@@ -21,6 +21,12 @@ const verifyUserIsAuthorOnRecipeMiddleware = async (
         },
     });
 
+    if (!findRecipe) {
+        return res.status(404).json({
+            message: "Recipe not found",
+        });
+    }
+
     if (findRecipe.user.id !== userId) {
         return res.status(403).json({
             message: "User is not author on recipe",
