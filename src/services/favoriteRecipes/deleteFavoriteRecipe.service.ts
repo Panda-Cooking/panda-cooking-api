@@ -7,15 +7,19 @@ const deleteFavoriteRecipeService = async (
 ): Promise<number> => {
     const favoriteRecipesRepo = AppDataSource.getRepository(FavoriteRecipes);
 
-    const findFavoriteRecipe = await favoriteRecipesRepo.findOneBy({
-        id: favoriteRecipeId,
+    const findFavoriteRecipe = await favoriteRecipesRepo.findOne({
+        where: {
+            recipe: {
+                id: favoriteRecipeId,
+            },
+        },
     });
 
     if (!findFavoriteRecipe) {
         throw new AppError("favorite Recipe not found!", 404);
     }
 
-    await favoriteRecipesRepo.delete({ id: favoriteRecipeId });
+    await favoriteRecipesRepo.remove(findFavoriteRecipe);
     return 204;
 };
 
