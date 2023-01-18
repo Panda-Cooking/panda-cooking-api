@@ -78,4 +78,4 @@ Por enquanto, não foi implementada autenticação.
 ---
 
 ## 5. Documentação e endpoints
-link da doc:
+link da doc: https://panda-cooking.github.io/panda-cooking-docs-api/
