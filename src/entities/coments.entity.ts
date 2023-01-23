@@ -23,9 +23,11 @@ export class Comment {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne(() => User, (user) => user.comments)
+    @ManyToOne(() => User, (user) => user.comments, { onDelete: "CASCADE" })
     user: User;
 
-    @ManyToOne(() => Recipe, (recipe) => recipe.comments)
+    @ManyToOne(() => Recipe, (recipe) => recipe.comments, {
+        onDelete: "CASCADE",
+    })
     recipe: Recipe;
 }

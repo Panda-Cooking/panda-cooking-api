@@ -38,7 +38,7 @@ export class Recipe {
     })
     portions: number;
 
-    @ManyToOne(() => User, (user) => user.recipes)
+    @ManyToOne(() => User, (user) => user.recipes, { onDelete: "CASCADE" })
     user: User;
 
     @ManyToOne(() => Category, (category) => category.recipes)

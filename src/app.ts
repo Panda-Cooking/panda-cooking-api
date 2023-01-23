@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import "express-async-errors";
 import handlerError from "./errors/handlerError";
 import authRouter from "./routes/auth.routes";
@@ -10,6 +11,7 @@ import usersRouter from "./routes/users.routes";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/auth", authRouter);
 app.use("/recipes", recipesRouter);

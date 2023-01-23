@@ -7,9 +7,13 @@ export class FavoriteRecipes {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @ManyToOne(() => User, (user) => user.favoriteRecipes)
+    @ManyToOne(() => User, (user) => user.favoriteRecipes, {
+        onDelete: "CASCADE",
+    })
     user: User;
 
-    @ManyToOne(() => Recipe, (recipe) => recipe.favoriteRecipe)
+    @ManyToOne(() => Recipe, (recipe) => recipe.favoriteRecipe, {
+        onDelete: "CASCADE",
+    })
     recipe: Recipe;
 }
